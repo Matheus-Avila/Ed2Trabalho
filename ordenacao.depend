@@ -1,0 +1,17 @@
+# depslib dependency file v1.0
+1553197790 source:/ice/Downloads/Algoritmos/ordenacao/src/movies.cpp
+	"movies.h"
+
+1553803595 /ice/Downloads/Algoritmos/ordenacao/include/movies.h
+	<string>
+
+1554409777 source:/ice/Downloads/Algoritmos/ordenacao/main.cpp
+	<iostream>
+	<fstream>
+	"movies.h"
+	<sstream>
+	<string>
+	<cstdlib>
+	<stdlib.h>
+	<time.h>
+
