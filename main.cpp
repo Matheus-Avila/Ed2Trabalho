@@ -21,14 +21,15 @@ using namespace std;
 //-------------------------------------------------------
 //QUICKSORT PRA UM VETOR DE INTEIROS
 
-void swap (int i, int j, int *vet)
+void trocaDePosicao (int i, int j, int *vet)
 {
     int k = vet[i];
     vet[i] = vet[j];
     vet[j] = k;
+    trocasDeRegistroINT++;
 }
 
-int partition (int start, int end, int *vet)
+int particao(int start, int end, int *vet)
 {
     int i = start;
     for (int j = start; j < end; j++)
@@ -36,11 +37,12 @@ int partition (int start, int end, int *vet)
 
         if (vet[j] <= vet[end])
         {
-            swap(i++, j, vet);
+            trocaDePosicao(i++, j, vet);
         }
+        comparacoesINT++;
     }
 
-    swap(i, end, vet);
+    trocaDePosicao(i, end, vet);
 
     return i;
 }
@@ -50,24 +52,25 @@ void quicksort (int start, int end, int *vet)
     if (start >= end)
         return;
 
-    int pivot = partition(start, end, vet);
+    int pivo = particao(start, end, vet);
 
-    quicksort(start, pivot - 1, vet);
-    quicksort(pivot + 1, end, vet);
+    quicksort(start, pivo - 1, vet);
+    quicksort(pivo + 1, end, vet);
 }
 
 //-------------------------------------------------------
 //QUICKSORT PRO VETOR MOVIES
 
-void swapM(int i, int j, movies *vet)
+void trocaDePosicaoMovies(int i, int j, movies *vet)
 {
     int k = vet[i].movieid;
     vet[i].movieid = vet[j].movieid;
     vet[j].movieid = k;
+    trocasDeRegistroMOV++;
 
 }
 
-int partitionM(int start, int end, movies *vet)
+int particaoMovies(int start, int end, movies *vet)
 {
     int i = start;
     for (int j = start; j < end; j++)
@@ -75,11 +78,12 @@ int partitionM(int start, int end, movies *vet)
 
         if (vet[j].movieid <= vet[end].movieid)
         {
-            swapM(i++, j, vet);
+            trocaDePosicaoMovies(i++, j, vet);
         }
+        comparacoesMOV++;
     }
 
-    swapM(i, end, vet);
+    trocaDePosicaoMovies(i, end, vet);
 
     return i;
 }
@@ -89,15 +93,17 @@ void quicksortM(int start, int end, movies *vet)
     if (start >= end)
         return;
 
-    int pivot = partitionM(start, end, vet);
+    int pivo = particaoMovies(start, end, vet);
 
-    quicksortM(start, pivot - 1, vet);
-    quicksortM(pivot + 1, end, vet);
+    quicksortM(start, pivo - 1, vet);
+    quicksortM(pivo + 1, end, vet);
 }
 //-------------------------------------------------------
 
 int main()
 {
+
+    //PARTE DE CODIGO RELATIVA A LEITURA E ORDENACAO DE UM VETOR DE INTEIROS
     /*
     int *v = new int[N];
     srand(time(NULL));
@@ -118,7 +124,8 @@ int main()
             cout<<endl;
         }
     }
-
+    trocasDeRegistroINT = 0;//GARANTINDO QUE AS VARIAVEIS GLOBAIS SAO NULAS ANTES DO QUICKSORT
+    comparacoesINT = 0;//GARANTINDO QUE AS VARIAVEIS GLOBAIS SAO NULAS ANTES DO QUICKSORT
     quicksort(0, N-1, v);
     y=0;
     cout<<endl<<endl;
@@ -133,7 +140,13 @@ int main()
             cout<<endl;
         }
     }
+        cout<<endl<<endl<<"numero de comparacoes: " << comparacoesINT<<endl;
+        cout<<"numero de trocas de registro: " << trocasDeRegistroINT<< endl;
+        //!!!!!NAO IMPLEMENTAMOS MEDIDOR DE TEMPO AQUI!!!!!!!
 */
+    //--------------------------------------------------
+
+    //CODIGO RELATIVO A LEITURA E ORDENACAO DOS DADOS DO ARQUIVO MOVIES
     ifstream arq;
     arq.open("DAVI REZENDE DOMINGUES - ratings_small.csv");
 
@@ -150,6 +163,7 @@ int main()
         getline(arq, s, '\n');
         //--------------------------
 
+        //LENDO O ARQUIVO----------------------
         for(int i = 0; i < 100; i++)
         {
             getline(arq, s, ',');
@@ -166,6 +180,9 @@ int main()
 
             vetor[i] = m;
         }
+        //------------------------------------
+
+        //IMPRIMINDO O ARQUIVO DE FORMA DESORDENADA
         cout<<endl<<endl;
         cout<<"IMPRIMINDO VETOR DE FILMES"<<endl;
         for(int i = 0; i < 100; i++)
@@ -175,10 +192,21 @@ int main()
             cout<<"RATING: "<<vetor[i].rating<<endl;
             cout<<"TIMESTAMPS: "<<vetor[i].timestamp<<endl;
         }
+        //------------------------------------
+
+        //APLICANDO O QUICKSORT
         clock_t fim, inicio;
         inicio = clock();
+
+        trocasDeRegistroMOV = 0;//GARANTINDO QUE AS VARIAVEIS GLOBAIS SAO NULAS ANTES DO QUICKSORT
+        comparacoesMOV = 0;//GARANTINDO QUE AS VARIAVEIS GLOBAIS SAO NULAS ANTES DO QUICKSORT
+
         quicksortM(0, 99, vetor);
         fim = clock();
+        //--------------------
+
+
+        //IMPRIMINDO VETOR ORDENADO E SUAS ESTATISTICAS
         cout<<endl<<endl;
         cout<<"IMPRIMINDO VETOR ORDENADO POR MovieId DE FILMES"<<endl;
         for(int i = 0; i < 100; i++)
@@ -189,12 +217,14 @@ int main()
             cout<<"TIMESTAMPS: "<<vetor[i].timestamp<<endl;
         }
 
-        cout<<endl<<endl<<"tempo de execucao: "<< (fim - inicio)<<endl;
+        cout<<endl<<endl<<"numero de comparacoes: " << comparacoesMOV<<endl;
+        cout<<"numero de trocas de registro: " << trocasDeRegistroMOV<< endl;
+        cout<<"tempo de execucao: "<< (fim - inicio)<<endl;
+        //------------------------------------------
 
-        //system("pause");
-
-        arq.close();
+        arq.close();//FECHANDO O ARQUIVO
     }
+    //----------------------------------------------------------------------
 
     return 0;
 }
