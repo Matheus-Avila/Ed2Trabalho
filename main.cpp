@@ -1,15 +1,18 @@
 #include <iostream>
 #include <fstream>
-#include "movies.h"
+#include "include/movies.h"
 #include <sstream>
 #include <string>
 #include <cstdlib>
 #include <stdlib.h>
 #include <time.h>
+#include <unistd.h>
 
 //ANALISAR QUAL BIBLIOTECA A GENTE PODE REMOVER, PQ SAO MUITAS
 
-#define N 100 //DEFINE O TAMANHO DO VETOR DE INTEIROS A SER ORDENADO
+#define NINT 100 //DEFINE O TAMANHO DO VETOR DE INTEIROS A SER ORDENADO
+
+//#define N 100 //DEFINE O TAMANHO DO VETOR DE MOVIES A SER ORDENADO
 
 int trocasDeRegistroINT = 0; //CONTADOR DAS TROCAS DE REGISTRO DO VETOR DE INTEIROS
 int comparacoesINT = 0; //CONTADOR DAS COMPARACOES DO VETOR DE INTEIROS
@@ -105,16 +108,16 @@ int main()
 
     //PARTE DE CODIGO RELATIVA A LEITURA E ORDENACAO DE UM VETOR DE INTEIROS
     /*
-    int *v = new int[N];
+    int *v = new int[NINT];
     srand(time(NULL));
-    for(int i = 0; i<N; i++)
+    for(int i = 0; i<NINT; i++)
     {
         v[i] = rand()%1000;
     }
     int y = 0;
 
     cout<<"IMPRIMINDO VETOR DE INTEIROS"<<endl;
-    for(int i = 0; i < N; i++)
+    for(int i = 0; i < NINT; i++)
     {
         cout<<v[i]<<" - ";
         y++;
@@ -130,7 +133,7 @@ int main()
     y=0;
     cout<<endl<<endl;
     cout<<"IMPRIMINDO VETOR DE INTEIROS ORDENADO"<<endl;
-    for(int i = 0; i<N; i++)
+    for(int i = 0; i<NINT; i++)
     {
         cout<<v[i]<<" - ";
         y++;
@@ -150,21 +153,40 @@ int main()
     ifstream arq;
     arq.open("DAVI REZENDE DOMINGUES - ratings_small.csv");
 
+    ifstream entrada;
+    entrada.open("entrada.txt");
+    int tam_entrada;
+    string ent;
+    getline(entrada, ent, '\n');
+    tam_entrada = atoi(ent.c_str());
+    int *entradas = new int[tam_entrada];
+        
+    if(entrada.is_open()){
+        
+        for(int i = 0; i<tam_entrada; i++){
+
+            getline(entrada, ent, '\n');
+            entradas[i] = atoi(ent.c_str());
+        }
+
+    }
+
     if(arq.is_open())
     {
-        movies *vetor = new movies[100];
+        int N;
+        movies *vetor = new movies[1000000];
         movies m;
         std::string s;
-
         //ALGORITMO PARA LER E DESCARTAR A PRIMEIRA LINHA
         getline(arq, s, ',');
         getline(arq, s, ',');
         getline(arq, s, ',');
         getline(arq, s, '\n');
         //--------------------------
-
+        for(int i = 0; i < tam_entrada; i++){
+            N = entradas[i];
         //LENDO O ARQUIVO----------------------
-        for(int i = 0; i < 100; i++)
+        for(int i = 0; i < N; i++)
         {
             getline(arq, s, ',');
             m.userid = atoi(s.c_str());
@@ -185,7 +207,7 @@ int main()
         //IMPRIMINDO O ARQUIVO DE FORMA DESORDENADA
         cout<<endl<<endl;
         cout<<"IMPRIMINDO VETOR DE FILMES"<<endl;
-        for(int i = 0; i < 100; i++)
+        for(int i = 0; i < N; i++)
         {
             cout<<"USER ID: "<<vetor[i].userid<<endl;
             cout<<"MOVIE ID: "<<vetor[i].movieid<<endl;
@@ -197,11 +219,11 @@ int main()
         //APLICANDO O QUICKSORT
         clock_t fim, inicio;
         inicio = clock();
-
         trocasDeRegistroMOV = 0;//GARANTINDO QUE AS VARIAVEIS GLOBAIS SAO NULAS ANTES DO QUICKSORT
         comparacoesMOV = 0;//GARANTINDO QUE AS VARIAVEIS GLOBAIS SAO NULAS ANTES DO QUICKSORT
 
         quicksortM(0, 99, vetor);
+
         fim = clock();
         //--------------------
 
@@ -209,7 +231,7 @@ int main()
         //IMPRIMINDO VETOR ORDENADO E SUAS ESTATISTICAS
         cout<<endl<<endl;
         cout<<"IMPRIMINDO VETOR ORDENADO POR MovieId DE FILMES"<<endl;
-        for(int i = 0; i < 100; i++)
+        for(int i = 0; i < N; i++)
         {
             cout<<"USER ID: "<<vetor[i].userid<<endl;
             cout<<"MOVIE ID: "<<vetor[i].movieid<<endl;
@@ -219,9 +241,10 @@ int main()
 
         cout<<endl<<endl<<"numero de comparacoes: " << comparacoesMOV<<endl;
         cout<<"numero de trocas de registro: " << trocasDeRegistroMOV<< endl;
-        cout<<"tempo de execucao: "<< (fim - inicio)<<endl;
+        cout<<"tempo de execucao: "<< ((fim - inicio))<<endl;
+        cout << ((float)(fim - inicio)/CLOCKS_PER_SEC);
         //------------------------------------------
-
+        }
         arq.close();//FECHANDO O ARQUIVO
     }
     //----------------------------------------------------------------------
