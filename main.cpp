@@ -150,8 +150,6 @@ int main()
     //--------------------------------------------------
 
     //CODIGO RELATIVO A LEITURA E ORDENACAO DOS DADOS DO ARQUIVO MOVIES
-    ifstream arq;
-    arq.open("DAVI REZENDE DOMINGUES - ratings_small.csv");
 
     ifstream entrada;
     entrada.open("entrada.txt");
@@ -170,84 +168,98 @@ int main()
         }
 
     }
+    int aleatorio;//variável que irá receber o valor aleatorio
+    ifstream arq;
+    for(int j =1; j<=5; j++){//Executar 5 vezes para cada N
 
-    if(arq.is_open())
-    {
-        int N;
-        movies *vetor = new movies[1000000];
-        movies m;
-        std::string s;
-        //ALGORITMO PARA LER E DESCARTAR A PRIMEIRA LINHA
-        getline(arq, s, ',');
-        getline(arq, s, ',');
-        getline(arq, s, ',');
-        getline(arq, s, '\n');
-        //--------------------------
-        for(int i = 0; i < tam_entrada; i++){
-            N = entradas[i];
-        //LENDO O ARQUIVO----------------------
-        for(int i = 0; i < N; i++)
-        {
+        srand(5*j);
+        
+        arq.open("DAVI REZENDE DOMINGUES - ratings_small.csv");
+
+        if(arq.is_open())
+        {   
+            int N;
+            movies *vetor = new movies[entradas[0]];
+            movies m;
+            std::string s;
+            //ALGORITMO PARA LER E DESCARTAR A PRIMEIRA LINHA
             getline(arq, s, ',');
-            m.userid = atoi(s.c_str());
-
             getline(arq, s, ',');
-            m.movieid = atoi(s.c_str());
-
             getline(arq, s, ',');
-            m.rating = atof(s.c_str());
-
             getline(arq, s, '\n');
-            m.timestamp = atol(s.c_str());
+            //--------------------------
+                N = entradas[0];
+            //LENDO O ARQUIVO----------------------
+            for(int i = 0; i < N; i++)
+            {   aleatorio = rand()%10;
+                if(aleatorio==1){
+                    getline(arq, s, ',');
+                    m.userid = atoi(s.c_str());
 
-            vetor[i] = m;
+                    getline(arq, s, ',');
+                    m.movieid = atoi(s.c_str());
+
+                    getline(arq, s, ',');
+                    m.rating = atof(s.c_str());
+
+                    getline(arq, s, '\n');
+                    m.timestamp = atol(s.c_str());
+
+                    vetor[i] = m;
+                }
+            }
+            //------------------------------------
+            /*
+            //IMPRIMINDO O ARQUIVO DE FORMA DESORDENADA
+            cout<<endl<<endl;
+            cout<<"IMPRIMINDO VETOR DE FILMES"<<endl;
+            for(int i = 0; i < N; i++)
+            {
+                cout<<"USER ID: "<<vetor[i].userid<<endl;
+                cout<<"MOVIE ID: "<<vetor[i].movieid<<endl;
+                cout<<"RATING: "<<vetor[i].rating<<endl;
+                cout<<"TIMESTAMPS: "<<vetor[i].timestamp<<endl;
+            }
+            */
+            //------------------------------------
+
+            //APLICANDO O QUICKSORT
+            clock_t fim, inicio;
+            inicio = clock();
+            trocasDeRegistroMOV = 0;//GARANTINDO QUE AS VARIAVEIS GLOBAIS SAO NULAS ANTES DO QUICKSORT
+            comparacoesMOV = 0;//GARANTINDO QUE AS VARIAVEIS GLOBAIS SAO NULAS ANTES DO QUICKSORT
+
+            quicksortM(0, 99, vetor);
+
+            fim = clock();
+            //--------------------
+
+            /*
+            //IMPRIMINDO VETOR ORDENADO E SUAS ESTATISTICAS
+            cout<<endl<<endl;
+            cout<<"IMPRIMINDO VETOR ORDENADO POR MovieId DE FILMES"<<endl;
+            for(int i = 0; i < N; i++)
+            {
+                cout<<"USER ID: "<<vetor[i].userid<<endl;
+                cout<<"MOVIE ID: "<<vetor[i].movieid<<endl;
+                cout<<"RATING: "<<vetor[i].rating<<endl;
+                cout<<"TIMESTAMPS: "<<vetor[i].timestamp<<endl;
+            }
+            */
+            cout<<endl<<endl<<"numero de comparacoes: " << comparacoesMOV<<endl;
+            cout<<"numero de trocas de registro: " << trocasDeRegistroMOV<< endl;
+            cout<<"tempo de execucao: "<< ((float)(fim - inicio)/CLOCKS_PER_SEC)*1000 << "ms"<<endl << endl;
+            //------------------------------------------
+            delete []vetor;//Deletando vetor de movies
+
+            arq.close();//FECHANDO O ARQUIVO
         }
-        //------------------------------------
-
-        //IMPRIMINDO O ARQUIVO DE FORMA DESORDENADA
-        cout<<endl<<endl;
-        cout<<"IMPRIMINDO VETOR DE FILMES"<<endl;
-        for(int i = 0; i < N; i++)
-        {
-            cout<<"USER ID: "<<vetor[i].userid<<endl;
-            cout<<"MOVIE ID: "<<vetor[i].movieid<<endl;
-            cout<<"RATING: "<<vetor[i].rating<<endl;
-            cout<<"TIMESTAMPS: "<<vetor[i].timestamp<<endl;
-        }
-        //------------------------------------
-
-        //APLICANDO O QUICKSORT
-        clock_t fim, inicio;
-        inicio = clock();
-        trocasDeRegistroMOV = 0;//GARANTINDO QUE AS VARIAVEIS GLOBAIS SAO NULAS ANTES DO QUICKSORT
-        comparacoesMOV = 0;//GARANTINDO QUE AS VARIAVEIS GLOBAIS SAO NULAS ANTES DO QUICKSORT
-
-        quicksortM(0, 99, vetor);
-
-        fim = clock();
-        //--------------------
+        //----------------------------------------------------------------------
+    }//Fim da 5 execução de cada N
 
 
-        //IMPRIMINDO VETOR ORDENADO E SUAS ESTATISTICAS
-        cout<<endl<<endl;
-        cout<<"IMPRIMINDO VETOR ORDENADO POR MovieId DE FILMES"<<endl;
-        for(int i = 0; i < N; i++)
-        {
-            cout<<"USER ID: "<<vetor[i].userid<<endl;
-            cout<<"MOVIE ID: "<<vetor[i].movieid<<endl;
-            cout<<"RATING: "<<vetor[i].rating<<endl;
-            cout<<"TIMESTAMPS: "<<vetor[i].timestamp<<endl;
-        }
 
-        cout<<endl<<endl<<"numero de comparacoes: " << comparacoesMOV<<endl;
-        cout<<"numero de trocas de registro: " << trocasDeRegistroMOV<< endl;
-        cout<<"tempo de execucao: "<< ((fim - inicio))<<endl;
-        cout << ((float)(fim - inicio)/CLOCKS_PER_SEC);
-        //------------------------------------------
-        }
-        arq.close();//FECHANDO O ARQUIVO
-    }
-    //----------------------------------------------------------------------
+
 
     return 0;
 }
