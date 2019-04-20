@@ -1,0 +1,192 @@
+Resultado da ordenação do vetor de movies
+
+Resultado da ordenação para N = 1000
+
+
+1 execução:
+
+numero de comparacoes: 1739
+numero de trocas de registro: 1652
+tempo de execucao: 0.105ms
+
+2 execução:
+
+numero de comparacoes: 1739
+numero de trocas de registro: 1652
+tempo de execucao: 0.093ms
+
+3 execução:
+
+numero de comparacoes: 1739
+numero de trocas de registro: 1652
+tempo de execucao: 0.099ms
+
+4 execução:
+
+numero de comparacoes: 1739
+numero de trocas de registro: 1652
+tempo de execucao: 0.1ms
+
+5 execução:
+
+numero de comparacoes: 1739
+numero de trocas de registro: 1652
+tempo de execucao: 0.094ms
+
+
+Média do número de comparações: 1739
+Média do número de trocas: 1652
+Média do tempo de execução: 0.0982ms
+
+Resultado da ordenação para N = 5000
+
+
+1 execução:
+
+numero de comparacoes: 1739
+numero de trocas de registro: 1652
+tempo de execucao: 0.095ms
+
+2 execução:
+
+numero de comparacoes: 1739
+numero de trocas de registro: 1652
+tempo de execucao: 0.106ms
+
+3 execução:
+
+numero de comparacoes: 1739
+numero de trocas de registro: 1652
+tempo de execucao: 0.096ms
+
+4 execução:
+
+numero de comparacoes: 1739
+numero de trocas de registro: 1652
+tempo de execucao: 0.067ms
+
+5 execução:
+
+numero de comparacoes: 1739
+numero de trocas de registro: 1652
+tempo de execucao: 0.07ms
+
+
+Média do número de comparações: 1739
+Média do número de trocas: 1652
+Média do tempo de execução: 0.0868ms
+
+Resultado da ordenação para N = 10000
+
+
+1 execução:
+
+numero de comparacoes: 1739
+numero de trocas de registro: 1652
+tempo de execucao: 0.09ms
+
+2 execução:
+
+numero de comparacoes: 1739
+numero de trocas de registro: 1652
+tempo de execucao: 0.107ms
+
+3 execução:
+
+numero de comparacoes: 1739
+numero de trocas de registro: 1652
+tempo de execucao: 0.104ms
+
+4 execução:
+
+numero de comparacoes: 1739
+numero de trocas de registro: 1652
+tempo de execucao: 0.082ms
+
+5 execução:
+
+numero de comparacoes: 1739
+numero de trocas de registro: 1652
+tempo de execucao: 0.098ms
+
+
+Média do número de comparações: 1739
+Média do número de trocas: 1652
+Média do tempo de execução: 0.0962ms
+
+Resultado da ordenação para N = 50000
+
+
+1 execução:
+
+numero de comparacoes: 1739
+numero de trocas de registro: 1652
+tempo de execucao: 0.096ms
+
+2 execução:
+
+numero de comparacoes: 1739
+numero de trocas de registro: 1652
+tempo de execucao: 0.07ms
+
+3 execução:
+
+numero de comparacoes: 1739
+numero de trocas de registro: 1652
+tempo de execucao: 0.093ms
+
+4 execução:
+
+numero de comparacoes: 1739
+numero de trocas de registro: 1652
+tempo de execucao: 0.093ms
+
+5 execução:
+
+numero de comparacoes: 1739
+numero de trocas de registro: 1652
+tempo de execucao: 0.109ms
+
+
+Média do número de comparações: 1739
+Média do número de trocas: 1652
+Média do tempo de execução: 0.0922ms
+
+Resultado da ordenação para N = 100000
+
+
+1 execução:
+
+numero de comparacoes: 1739
+numero de trocas de registro: 1652
+tempo de execucao: 0.061ms
+
+2 execução:
+
+numero de comparacoes: 1739
+numero de trocas de registro: 1652
+tempo de execucao: 0.042ms
+
+3 execução:
+
+numero de comparacoes: 1739
+numero de trocas de registro: 1652
+tempo de execucao: 0.065ms
+
+4 execução:
+
+numero de comparacoes: 1739
+numero de trocas de registro: 1652
+tempo de execucao: 0.041ms
+
+5 execução:
+
+numero de comparacoes: 1739
+numero de trocas de registro: 1652
+tempo de execucao: 0.04ms
+
+
+Média do número de comparações: 1739
+Média do número de trocas: 1652
+Média do tempo de execução: 0.0498ms
+
