@@ -1,4 +1,4 @@
-Resultado da ordenação do vetor de movies
+Resultado da ordenação das variações do QuickSort
 
 
 Resultado da ordenação para N = 1000
@@ -6,7 +6,7 @@ Resultado da ordenação para N = 1000
 
 Média do número de comparações: 1739
 Média do número de trocas: 1652
-Média do tempo de execução: 0.0948ms
+Média do tempo de execução: 0.0378ms
 
 
 Resultado da ordenação para N = 5000
@@ -14,7 +14,7 @@ Resultado da ordenação para N = 5000
 
 Média do número de comparações: 1739
 Média do número de trocas: 1652
-Média do tempo de execução: 0.0858ms
+Média do tempo de execução: 0.03ms
 
 
 Resultado da ordenação para N = 10000
@@ -22,7 +22,7 @@ Resultado da ordenação para N = 10000
 
 Média do número de comparações: 1739
 Média do número de trocas: 1652
-Média do tempo de execução: 0.0794ms
+Média do tempo de execução: 0.0328ms
 
 
 Resultado da ordenação para N = 50000
@@ -30,7 +30,7 @@ Resultado da ordenação para N = 50000
 
 Média do número de comparações: 1739
 Média do número de trocas: 1652
-Média do tempo de execução: 0.0796ms
+Média do tempo de execução: 0.0276ms
 
 
 Resultado da ordenação para N = 100000
@@ -38,5 +38,5 @@ Resultado da ordenação para N = 100000
 
 Média do número de comparações: 1739
 Média do número de trocas: 1652
-Média do tempo de execução: 0.0502ms
+Média do tempo de execução: 0.0198ms
 
