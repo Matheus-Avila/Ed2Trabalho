@@ -15,10 +15,10 @@
 //#define N 100 //DEFINE O TAMANHO DO VETOR DE MOVIES A SER ORDENADO
 //--------------------Cenário 1 Funções ----------------------------
 
-int trocasDeRegistroINT = 0; //CONTADOR DAS TROCAS DE REGISTRO DO VETOR DE INTEIROS
-int comparacoesINT = 0; //CONTADOR DAS COMPARACOES DO VETOR DE INTEIROS
-int trocasDeRegistroMOV = 0; //CONTADOR DAS TROCAS DE REGISTRO DO VETOR DE MOVIES
-int comparacoesMOV = 0; //CONTADOR DAS TROCAS DE REGISTRO DO VETOR DE MOVIES
+long int trocasDeRegistroINT = 0; //CONTADOR DAS TROCAS DE REGISTRO DO VETOR DE INTEIROS
+long int comparacoesINT = 0; //CONTADOR DAS COMPARACOES DO VETOR DE INTEIROS
+long int trocasDeRegistroMOV = 0; //CONTADOR DAS TROCAS DE REGISTRO DO VETOR DE MOVIES
+long int comparacoesMOV = 0; //CONTADOR DAS TROCAS DE REGISTRO DO VETOR DE MOVIES
 
 using namespace std;
 
@@ -93,7 +93,8 @@ int particaoMovies(int start, int end, movies *vet)
 }
 
 void quicksortM(int start, int end, movies *vet)
-{
+{   
+    comparacoesMOV++;
     if (start >= end)
         return;
 
@@ -115,53 +116,62 @@ void trocaPosicao2(int A[], int i, int j){
     int temp = A[i];
     A[i] = A[j];
     A[j] = temp;
+    trocasDeRegistroINT++;
 }
 
 int particiona2(int A[], int inicio, int fim) {
-
-    srand(time(0));
-    int indiceAleatorio[3];
-    //Garantindo que os números aleatórios são diferentes
-    for(int i = 0; i <= 2; i++){
-        indiceAleatorio[i] = rand()%(fim-inicio);
-        while(i==1 && indiceAleatorio[i]==indiceAleatorio[i-1]){
-            indiceAleatorio[i] = rand()%(fim-inicio);
-        }
-        while(i==2 && (indiceAleatorio[i]==indiceAleatorio[i-1] || indiceAleatorio[i]==indiceAleatorio[i-2])){
-            indiceAleatorio[i] = rand()%(fim-inicio);
-        }
-    }
-    int meio = (inicio + fim) / 2;
-    int a = A[indiceAleatorio[0]];
-    int b = A[indiceAleatorio[1]];
-    int c = A[indiceAleatorio[2]];
     int medianaIndice; //índice da mediana
-    if (a < b) {
-        if (b < c) {
-            //a < b && b < c
-            medianaIndice = meio;
-        } else {
-            if (a < c) {
-                //a < c && c <= b
-                medianaIndice = fim;
-            } else {
-                //c <= a && a < b
-                medianaIndice = inicio;
+    if(fim - inicio >= 3){
+        srand(time(0));
+        int indiceAleatorio[3];
+        //Garantindo que os números aleatórios são diferentes
+        for(int i = 0; i <= 2; i++){
+            indiceAleatorio[i] = rand()%(fim-inicio);
+            while(i==1 && indiceAleatorio[i]==indiceAleatorio[i-1]){
+                indiceAleatorio[i] = rand()%(fim-inicio);
+            }
+            while(i==2 && (indiceAleatorio[i]==indiceAleatorio[i-1] || indiceAleatorio[i]==indiceAleatorio[i-2])){
+                indiceAleatorio[i] = rand()%(fim-inicio);
             }
         }
-    } else {
-        if (c < b) {
-            //c < b && b <= a
-            medianaIndice = meio;
-        } else {
-            if (c < a) {
-                //b <= c && c < a
-                medianaIndice = fim;
+        int meio = (inicio + fim) / 2;
+        int a = A[indiceAleatorio[0]];
+        int b = A[indiceAleatorio[1]];
+        int c = A[indiceAleatorio[2]];
+        comparacoesINT++;
+        if (a < b) {
+            comparacoesINT++;
+            if (b < c) {
+                //a < b && b < c
+                medianaIndice = meio;
             } else {
-                //b <= a && a <= c
-                medianaIndice = inicio;
+                comparacoesINT++;
+                if (a < c) {
+                    //a < c && c <= b
+                    medianaIndice = fim;
+                } else {
+                    //c <= a && a < b
+                    medianaIndice = inicio;
+                }
+            }
+        } else {
+            comparacoesINT++;
+            if (c < b) {
+                //c < b && b <= a
+                medianaIndice = meio;
+            } else {
+                comparacoesINT++;
+                if (c < a) {
+                    //b <= c && c < a
+                    medianaIndice = fim;
+                } else {
+                    //b <= a && a <= c
+                    medianaIndice = inicio;
+                }
             }
         }
+    }else{
+        medianaIndice = fim;
     }
     //Coloca o elemento da mediana no fim para poder usar o Quicksort
     trocaPosicao2(A, medianaIndice, fim);
@@ -172,6 +182,7 @@ int particiona2(int A[], int inicio, int fim) {
     int j;
     //Passa os menores que o pivô para a partição da esquerda
     for (j = inicio; j <= fim - 1; j++) {
+        comparacoesINT++;
         if (A[j] <= pivo) {
             i = i + 1;
             trocaPosicao2(A, i, j);
@@ -182,6 +193,8 @@ int particiona2(int A[], int inicio, int fim) {
     return i + 1; //Retorna a posição do pivô
 }
 void quicksortMedTres(int A[], int inicio, int fim) {
+    
+    comparacoesINT++;
     if (inicio < fim) {
         int q = particiona2(A, inicio, fim);
         quicksortMedTres(A, inicio, q - 1);
@@ -192,40 +205,44 @@ void quicksortMedTres(int A[], int inicio, int fim) {
 //---------------QuickSort Mediana 5---------------
 
 int particiona2Med5(int A[], int inicio, int fim) {
-
-    srand(time(0));
-    int indiceAleatorio[5]; // Vetor de indices aleatórios
-    //Garantindo que os números aleatórios são diferentes
-    for(int i = 0; i <= 4; i++){
-        indiceAleatorio[i] = rand()%(fim-inicio);
-        while(i==1 && indiceAleatorio[i]==indiceAleatorio[i-1]){
-            indiceAleatorio[i] = rand()%(fim-inicio);
-        }
-        while(i==2 && (indiceAleatorio[i]==indiceAleatorio[i-1] || indiceAleatorio[i]==indiceAleatorio[i-2])){
-            indiceAleatorio[i] = rand()%(fim-inicio);
-        }
-        while(i==3 && (indiceAleatorio[i]==indiceAleatorio[i-1] || indiceAleatorio[i]==indiceAleatorio[i-2]
-         || indiceAleatorio[i]==indiceAleatorio[i-3])){
-            indiceAleatorio[i] = rand()%(fim-inicio);
-        }
-        while(i==4 && (indiceAleatorio[i]==indiceAleatorio[i-1] || indiceAleatorio[i]==indiceAleatorio[i-2]
-         || indiceAleatorio[i]==indiceAleatorio[i-3] || indiceAleatorio[i]==indiceAleatorio[i-4])){
-            indiceAleatorio[i] = rand()%(fim-inicio);
-        }
-    }
-    int aleatorio[5]; //Vetor com o valor dos índices aleatórios
-    for(int i = 0; i <=4; i++){
-        aleatorio[i] = A[indiceAleatorio[i]];
-    }
     int medianaIndice;//índice da mediana, que será o pivô
-    quicksort(0, 4, aleatorio);
-    //procurando qual indice corresponde a mediana(aleatorio[2])
-    for(int i =0; i <= 4; i++){
-        if(aleatorio[2] == A[indiceAleatorio[i]]){
-            medianaIndice = indiceAleatorio[i];
+    if(fim - inicio >= 5){
+        srand(time(0));
+        int indiceAleatorio[5]; // Vetor de indices aleatórios
+        //Garantindo que os números aleatórios são diferentes
+        for(int i = 0; i <= 4; i++){
+            indiceAleatorio[i] = rand()%(fim-inicio);
+            while(i==1 && indiceAleatorio[i]==indiceAleatorio[i-1]){
+                indiceAleatorio[i] = rand()%(fim-inicio);
+            }
+            while(i==2 && (indiceAleatorio[i]==indiceAleatorio[i-1] || indiceAleatorio[i]==indiceAleatorio[i-2])){
+                indiceAleatorio[i] = rand()%(fim-inicio);
+            }
+            while(i==3 && (indiceAleatorio[i]==indiceAleatorio[i-1] || indiceAleatorio[i]==indiceAleatorio[i-2]
+            || indiceAleatorio[i]==indiceAleatorio[i-3])){
+                indiceAleatorio[i] = rand()%(fim-inicio);
+            }
+            while(i==4 && (indiceAleatorio[i]==indiceAleatorio[i-1] || indiceAleatorio[i]==indiceAleatorio[i-2]
+            || indiceAleatorio[i]==indiceAleatorio[i-3] || indiceAleatorio[i]==indiceAleatorio[i-4])){
+                indiceAleatorio[i] = rand()%(fim-inicio);
+            }
+        }
+        int aleatorio[5]; //Vetor com o valor dos índices aleatórios
+        for(int i = 0; i <=4; i++){
+            aleatorio[i] = A[indiceAleatorio[i]];
+        }
+        quicksort(0, 4, aleatorio);
+        //procurando qual indice corresponde a mediana(aleatorio[2])
+        for(int i =0; i <= 4; i++){
+            comparacoesINT++;
+            if(aleatorio[2] == A[indiceAleatorio[i]]){
+                medianaIndice = indiceAleatorio[i];
+            }
         }
     }
-    
+    else{
+        medianaIndice = fim;
+    }    
     //Coloca o elemento da mediana no fim para poder usar o Quicksort
     trocaPosicao2(A, medianaIndice, fim);
         
@@ -235,6 +252,7 @@ int particiona2Med5(int A[], int inicio, int fim) {
     int j;
     //Passa os menores que o pivô para a partição da esquerda
     for (j = inicio; j <= fim - 1; j++) {
+        comparacoesINT++;
         if (A[j] <= pivo) {
             i = i + 1;
             trocaPosicao2(A, i, j);
@@ -245,6 +263,7 @@ int particiona2Med5(int A[], int inicio, int fim) {
     return i + 1; //Retorna a posição do pivô
 }
 void quicksortMedCinco(int A[], int inicio, int fim) {
+    comparacoesINT++;
     if (inicio < fim) {
         int q = particiona2Med5(A, inicio, fim);
         quicksortMedCinco(A, inicio, q - 1);
@@ -261,6 +280,7 @@ void InsertionSort(int vet[], int tam){
         j= i-1;
         pivo = vet[i];
         for(j; j <= 0; j--){
+            comparacoesINT++;
             if(pivo<vet[j]){
                 vet[j+1]= vet[j];
             }
@@ -276,7 +296,7 @@ void InsertionSort(int vet[], int tam){
 //-----------QuickSort Insertion m = 10--------------
 
 void QuickInsertionSort10 (int start, int end, int *vet)
-{
+{   comparacoesINT++;
     if((end - start + 1 ) <= 10){
         InsertionSort(vet, (end - start + 1));
     }
@@ -292,7 +312,7 @@ void QuickInsertionSort10 (int start, int end, int *vet)
 //-----------QuickSort Insertion m = 100----------------
 
 void QuickInsertionSort100 (int start, int end, int *vet)
-{
+{   comparacoesINT++;
     if((end - start + 1 ) <= 100){
         InsertionSort(vet, (end - start + 1));
     }
@@ -307,6 +327,125 @@ void QuickInsertionSort100 (int start, int end, int *vet)
 //--------------------Fim Cenário 2 Funções ----------------------------
 
 //--------------------Cenário 3 Funções ----------------------------
+
+void intercalaMerge(int X[], int inicio, int fim, int meio){  
+    int posLivre,inicio_vetor1, inicio_vetor2, i;  
+    int aux[fim-inicio];  
+    inicio_vetor1 = inicio;  
+    inicio_vetor2 = meio+1;  
+    posLivre = inicio;  
+    while(inicio_vetor1 <= meio && inicio_vetor2 <= fim){  
+        if (X[inicio_vetor1] <= X[inicio_vetor2])  
+        {  
+            aux[posLivre] = X[inicio_vetor1];  
+            inicio_vetor1++;  
+        }  
+        else{  
+            aux[posLivre] = X[inicio_vetor2];  
+            inicio_vetor2++;  
+        }  
+        posLivre++;  
+    }  
+    //se ainda existem numeros no primeiro vetor  
+    //que nao foram intercalados  
+    for (int i = inicio_vetor1; i <= meio; ++i)  
+    {  
+        aux[posLivre] = X[i];  
+        posLivre++;  
+    }  
+    //se ainda existem numeros no segundo vetor  
+    //que nao foram intercalados  
+    for (int i = inicio_vetor2; i <= fim; ++i)  
+    {  
+        aux[posLivre] = X[i];  
+        posLivre++;  
+    }  
+    //retorne os valores do vetor aux para o vetor X  
+    for (int i = inicio; i <=fim; ++i)  
+    {  
+        X[i] = aux[i];  
+    }  
+}  
+void merge (int X[], int inicio, int fim){  
+    int meio;  
+    if (inicio < fim)  
+    {  
+        meio = (inicio+fim)/2;  
+        merge (X,inicio, meio);  
+        merge (X,meio+1, fim);  
+        intercalaMerge(X,inicio, fim, meio);  
+    }  
+} 
+
+//---------------Gnome Sort (Wikipedia)--------------
+
+void GnomeSortINT(int vet[], int tam){
+    int next = 0, previous = 0;
+    int i = 0;
+
+    for(i = 0; i < tam ; i++) {
+    comparacoesINT++;
+        if(vet[i] > vet[i + 1]) {
+            previous = i;
+            next = i + 1;
+            while(vet[previous] > vet[next])  {
+                trocaDePosicao(previous, next, vet);
+                comparacoesINT++;
+                if(previous > 0)
+                    previous--;
+                comparacoesINT++;
+                if(next > 0) 
+                    next--;
+            }
+        }
+    }
+}
+
+//--------------------Heap Sort--------------
+
+void max_Heapify(int* vetor, int i, int tamVetor){
+	int fEsq = 2*i + 1;
+	int fDir = 2*i + 2;
+	int max;
+    comparacoesINT++;
+	if(fEsq <= tamVetor && vetor[fEsq] > vetor[i] ){
+		max = fEsq;
+	}
+	else{
+		max = i;
+	}
+    comparacoesINT++;
+	if(fDir <= tamVetor && vetor[fDir] > vetor[max]){
+		max = fDir;
+	}
+    comparacoesINT++;
+	if(max != i){
+		int aux = vetor[i];
+		vetor[i] = vetor[max];
+		vetor[max] = aux;
+        trocasDeRegistroINT++;
+		max_Heapify(vetor,max,tamVetor);
+	}
+}
+
+void build_Heap(int* vetor, int tamVetor){
+	for(int i=tamVetor/2;i>=0;i--){
+		max_Heapify(vetor,i,tamVetor);
+	}
+}
+
+void Heapsort(int* vetor, int tamVetor){
+	build_Heap(vetor,tamVetor);
+	for(int i=tamVetor;i>=1;i--){
+		int aux = vetor[0];
+		vetor[0] = vetor[i];
+		vetor[i] = aux;
+		tamVetor--;
+		max_Heapify(vetor,0,tamVetor);
+	}
+}
+
+
 
 int main()
 {   
@@ -387,20 +526,20 @@ int main()
 
     //Leitura do arquivo rating
     int aleatorio;//variável que irá receber o valor aleatorio
-    int c = 0;//auxiliar
     ifstream arq;
     for(int i = 0; i< tam_entrada; i++){
+        
         saida1 << endl << "Resultado da ordenação para N = " << entradas[i]  << endl << endl;
         for(int j =1; j<=5; j++){//Executar 5 vezes para cada N
             cout << endl << j << " execução para N = " << entradas[i];
             srand(2*j*i);//Sementes diferentes para cada execução de cada N
 
-            arq.open("DAVI REZENDE DOMINGUES - ratings_small.csv");
+            arq.open("ratings.csv");
 
             if(arq.is_open())
             {   
                 int N;
-                movies *vetor = new movies[entradas[0]];
+                movies *vetor = new movies[entradas[i]];
                 movies m;
                 std::string s;
                 //ALGORITMO PARA LER E DESCARTAR A PRIMEIRA LINHA
@@ -409,11 +548,11 @@ int main()
                 getline(arq, s, ',');
                 getline(arq, s, '\n');
                 //--------------------------
-                N = entradas[0];
+                
+                N = entradas[i];
                 //LENDO O ARQUIVO----------------------
                 for(int i = 0; i < N; i++)
                 {   aleatorio = rand()%10;
-                    c++;//auxiliar
                     if(aleatorio==1){
                         getline(arq, s, ',');
                         m.userid = atoi(s.c_str());
@@ -452,8 +591,8 @@ int main()
                 inicio = clock();
                 trocasDeRegistroMOV = 0;//GARANTINDO QUE AS VARIAVEIS GLOBAIS SAO NULAS ANTES DO QUICKSORT
                 comparacoesMOV = 0;//GARANTINDO QUE AS VARIAVEIS GLOBAIS SAO NULAS ANTES DO QUICKSORT
-
-                quicksortM(0, 99, vetor);
+                
+                quicksortM(0, N, vetor);
 
                 fim = clock();
                 //--------------------
@@ -476,7 +615,7 @@ int main()
                 cout<<endl<<endl<<"numero de comparacoes: " << comparacoesMOV<<endl;
                 cout<<"numero de trocas de registro: " << trocasDeRegistroMOV<< endl;
                 cout<<"tempo de execucao: "<< ((float)(fim - inicio)/CLOCKS_PER_SEC)*1000 <<
-                "ms"<<c<<endl << endl;
+                "ms"<<endl << endl;
                 //------------------------------------------
                 delete []vetor;//Deletando vetor de movies
 
@@ -486,16 +625,16 @@ int main()
         }//Fim da 5 execução de cada N
         cout << "--------------------------------------" << endl;
         //Análise dos dados para cada N
-        int auxCompMov = 0;
-        int auxTrocaMov = 0;
+        float auxCompMov = 0;
+        float auxTrocaMov = 0;
         float auxTempoMov = 0;
         for(int i = 0; i < 5; i++){
             auxCompMov+=estatisticaComparacoesMOV[i];
             auxTrocaMov+=estatisticaTrocasMOV[i];
             auxTempoMov+=estatisticaTempoMOV[i];
         }
-        auxCompMov = auxCompMov/5;
-        auxTrocaMov = auxTrocaMov/5;
+        auxCompMov = auxCompMov/5.0;
+        auxTrocaMov = auxTrocaMov/5.0;
         auxTempoMov = (float) (auxTempoMov/5);
         saida1 << endl << "Média do número de comparações: " << auxCompMov << endl;
         saida1 << "Média do número de trocas: " << auxTrocaMov << endl;
@@ -508,24 +647,31 @@ int main()
 
     //--------------------Cenário 2 Main ----------------------------
 
+    int estatisticaComparacoesINT[5] = {0,0,0,0,0};
+    int estatisticaTrocasINT[5] = {0,0,0,0,0};
+    float estatisticaTempoINT[5] = {0,0,0,0,0};
+
     fstream saida2;
     saida2.open("cenario2.txt");
     saida2 << "Resultado da ordenação das variações do QuickSort" << endl << endl;
-
+    saida2 << "Resultado para o QuickSort recursivo" << endl;
+    cout << "Resultado para o QuickSort recursivo" << endl;
     //Leitura do arquivo rating
+    
     for(int i = 0; i< tam_entrada; i++){
+        
         saida2 << endl << "Resultado da ordenação para N = " << entradas[i]  << endl << endl;
         for(int j =1; j<=5; j++){//Executar 5 vezes para cada N
             cout << endl << j << " execução para N = " << entradas[i];
-            srand(2*j*i);//Sementes diferentes para cada execução de cada N
+            srand(2*j*(i+1));//Sementes diferentes para cada execução de cada N
 
-            arq.open("DAVI REZENDE DOMINGUES - ratings_small.csv");
+            arq.open("ratings.csv");
 
             if(arq.is_open())
             {   
-                int N;
-                movies *vetor = new movies[entradas[0]];
-                movies m;
+                int N = entradas[i];
+                int *vetor = new int[N];
+                int m;
                 std::string s;
                 //ALGORITMO PARA LER E DESCARTAR A PRIMEIRA LINHA
                 getline(arq, s, ',');
@@ -533,24 +679,111 @@ int main()
                 getline(arq, s, ',');
                 getline(arq, s, '\n');
                 //--------------------------
-                N = entradas[0];
+                
                 //LENDO O ARQUIVO----------------------
                 for(int i = 0; i < N; i++)
                 {   aleatorio = rand()%10;
-                    c++;//auxiliar
                     if(aleatorio==1){
                         getline(arq, s, ',');
-                        m.userid = atoi(s.c_str());
+                        m = atoi(s.c_str());
 
                         getline(arq, s, ',');
-                        m.movieid = atoi(s.c_str());
 
                         getline(arq, s, ',');
-                        m.rating = atof(s.c_str());
-
+                        
                         getline(arq, s, '\n');
-                        m.timestamp = atol(s.c_str());
+                        
+                        vetor[i] = m;
+                    }else{
+                        i--;
+                    }
+                }
 
+                //APLICANDO O QUICKSORT
+                clock_t fim, inicio;
+                inicio = clock();
+                trocasDeRegistroINT = 0;//GARANTINDO QUE AS VARIAVEIS GLOBAIS SAO NULAS ANTES DO QUICKSORT
+                comparacoesINT = 0;//GARANTINDO QUE AS VARIAVEIS GLOBAIS SAO NULAS ANTES DO QUICKSORT
+                
+                quicksort(0, N, vetor);
+
+                fim = clock();
+                //--------------------
+
+                
+                estatisticaComparacoesINT[j-1] = comparacoesINT;
+                estatisticaTrocasINT[j-1] = trocasDeRegistroINT;
+                estatisticaTempoINT[j-1] = ((float)(fim - inicio)/CLOCKS_PER_SEC)*1000;
+                cout<<endl<<endl<<"numero de comparacoes: " << comparacoesINT<<endl;
+                cout<<"numero de trocas de registro: " << trocasDeRegistroINT<< endl;
+                cout<<"tempo de execucao: "<< ((float)(fim - inicio)/CLOCKS_PER_SEC)*1000 <<
+                "ms"<<endl << endl;
+                //------------------------------------------
+                delete []vetor;//Deletando vetor de movies
+
+                arq.close();//FECHANDO O ARQUIVO DE DADOS
+            }
+            
+        }//Fim da 5 execução de cada N
+        cout << "--------------------------------------" << endl;
+        //Análise dos dados para cada N
+        float auxCompMov = 0;
+        float auxTrocaMov = 0;
+        float auxTempoMov = 0;
+        for(int i = 0; i < 5; i++){
+            auxCompMov += estatisticaComparacoesINT[i];
+            auxTrocaMov += estatisticaTrocasMOV[i];
+            auxTempoMov += estatisticaTempoMOV[i];
+        }
+        auxCompMov = auxCompMov/5;
+        auxTrocaMov = auxTrocaMov/5;
+        auxTempoMov = (float) (auxTempoMov/5);
+        saida2 << endl << "Média do número de comparações: " << auxCompMov << endl;
+        saida2 << "Média do número de trocas: " << auxTrocaMov << endl;
+        saida2 << "Média do tempo de execução: " << auxTempoMov << "ms" << endl << endl;
+
+    }
+    
+
+    saida2 << "Resultado para o QuickSort Mediana K = 3" << endl;
+    cout << "Resultado para o QuickSort Mediana K = 3" << endl;
+    //Leitura do arquivo rating
+    
+    for(int i = 0; i< tam_entrada; i++){
+
+        saida2 << endl << "Resultado da ordenação para N = " << entradas[i]  << endl << endl;
+        for(int j =1; j<=5; j++){//Executar 5 vezes para cada N
+            cout << endl << j << " execução para N = " << entradas[i];
+            srand(2*j*(i+1));//Sementes diferentes para cada execução de cada N
+
+            arq.open("ratings.csv");
+
+            if(arq.is_open())
+            {   
+                int N = entradas[i];
+                int *vetor = new int[N];
+                int m;
+                std::string s;
+                //ALGORITMO PARA LER E DESCARTAR A PRIMEIRA LINHA
+                getline(arq, s, ',');
+                getline(arq, s, ',');
+                getline(arq, s, ',');
+                getline(arq, s, '\n');
+                //--------------------------
+                
+                //LENDO O ARQUIVO----------------------
+                for(int i = 0; i < N; i++)
+                {   aleatorio = rand()%10;
+                    if(aleatorio==1){
+                        getline(arq, s, ',');
+                        m = atoi(s.c_str());
+
+                        getline(arq, s, ',');
+
+                        getline(arq, s, ',');
+                        
+                        getline(arq, s, '\n');
+                        
                         vetor[i] = m;
                     }else{
                         i--;
@@ -574,10 +807,10 @@ int main()
                 //APLICANDO O QUICKSORT
                 clock_t fim, inicio;
                 inicio = clock();
-                trocasDeRegistroMOV = 0;//GARANTINDO QUE AS VARIAVEIS GLOBAIS SAO NULAS ANTES DO QUICKSORT
-                comparacoesMOV = 0;//GARANTINDO QUE AS VARIAVEIS GLOBAIS SAO NULAS ANTES DO QUICKSORT
-
-                quicksortM(0, 99, vetor);
+                trocasDeRegistroINT = 0;//GARANTINDO QUE AS VARIAVEIS GLOBAIS SAO NULAS ANTES DO QUICKSORT
+                comparacoesINT = 0;//GARANTINDO QUE AS VARIAVEIS GLOBAIS SAO NULAS ANTES DO QUICKSORT
+                
+                quicksortMedTres(vetor, 0, N);
 
                 fim = clock();
                 //--------------------
@@ -594,27 +827,29 @@ int main()
                     cout<<"TIMESTAMPS: "<<vetor[i].timestamp<<endl;
                 }
                 */
-                estatisticaComparacoesMOV[j-1] = comparacoesMOV;
-                estatisticaTrocasMOV[j-1] = trocasDeRegistroMOV;
+                estatisticaComparacoesINT[j-1] = comparacoesINT;
+                estatisticaTrocasMOV[j-1] = trocasDeRegistroINT;
                 estatisticaTempoMOV[j-1] = ((float)(fim - inicio)/CLOCKS_PER_SEC)*1000;
-                cout<<endl<<endl<<"numero de comparacoes: " << comparacoesMOV<<endl;
-                cout<<"numero de trocas de registro: " << trocasDeRegistroMOV<< endl;
+                cout<<endl<<endl<<"numero de comparacoes: " << comparacoesINT<<endl;
+                cout<<"numero de trocas de registro: " << trocasDeRegistroINT<< endl;
                 cout<<"tempo de execucao: "<< ((float)(fim - inicio)/CLOCKS_PER_SEC)*1000 <<
-                "ms"<<c<<endl << endl;
+                "ms"<<endl << endl;
                 //------------------------------------------
                 delete []vetor;//Deletando vetor de movies
 
                 arq.close();//FECHANDO O ARQUIVO DE DADOS
+            }else{
+                 cout << "erro arquivo!" << endl;
             }
             
         }//Fim da 5 execução de cada N
         cout << "--------------------------------------" << endl;
         //Análise dos dados para cada N
-        int auxCompMov = 0;
-        int auxTrocaMov = 0;
+        float auxCompMov = 0;
+        float auxTrocaMov = 0;
         float auxTempoMov = 0;
         for(int i = 0; i < 5; i++){
-            auxCompMov+=estatisticaComparacoesMOV[i];
+            auxCompMov+=estatisticaComparacoesINT[i];
             auxTrocaMov+=estatisticaTrocasMOV[i];
             auxTempoMov+=estatisticaTempoMOV[i];
         }
@@ -625,8 +860,812 @@ int main()
         saida2 << "Média do número de trocas: " << auxTrocaMov << endl;
         saida2 << "Média do tempo de execução: " << auxTempoMov << "ms" << endl << endl;
 
-    }//Fim das N execuções
+    }
+    
+    saida2 << "Resultado para o QuickSort Mediana K = 5" << endl;
+    cout << "Resultado para o QuickSort Mediana K = 5" << endl;
+    //Leitura do arquivo rating
+    
+    for(int i = 0; i< tam_entrada; i++){
+        
+        saida2 << endl << "Resultado da ordenação para N = " << entradas[i]  << endl << endl;
+        for(int j =1; j<=5; j++){//Executar 5 vezes para cada N
+            cout << endl << j << " execução para N = " << entradas[i];
+            srand(2*j*(i+1));//Sementes diferentes para cada execução de cada N
+
+            arq.open("ratings.csv");
+
+            if(arq.is_open())
+            {   
+                int N = entradas[i];
+                int *vetor = new int[N];
+                int m;
+                std::string s;
+                //ALGORITMO PARA LER E DESCARTAR A PRIMEIRA LINHA
+                getline(arq, s, ',');
+                getline(arq, s, ',');
+                getline(arq, s, ',');
+                getline(arq, s, '\n');
+                //--------------------------
+                
+                //LENDO O ARQUIVO----------------------
+                for(int i = 0; i < N; i++)
+                {   aleatorio = rand()%10;
+                    if(aleatorio==1){
+                        getline(arq, s, ',');
+                        m = atoi(s.c_str());
+
+                        getline(arq, s, ',');
+
+                        getline(arq, s, ',');
+                        
+                        getline(arq, s, '\n');
+                        
+                        vetor[i] = m;
+                    }else{
+                        i--;
+                    }
+                }
+                //------------------------------------
+                /*
+                //IMPRIMINDO O ARQUIVO DE FORMA DESORDENADA
+                cout<<endl<<endl;
+                cout<<"IMPRIMINDO VETOR DE FILMES"<<endl;
+                for(int i = 0; i < N; i++)
+                {
+                    cout<<"USER ID: "<<vetor[i].userid<<endl;
+                    cout<<"MOVIE ID: "<<vetor[i].movieid<<endl;
+                    cout<<"RATING: "<<vetor[i].rating<<endl;
+                    cout<<"TIMESTAMPS: "<<vetor[i].timestamp<<endl;
+                }
+                */
+                //------------------------------------
+
+                //APLICANDO O QUICKSORT
+                clock_t fim, inicio;
+                inicio = clock();
+                trocasDeRegistroINT = 0;//GARANTINDO QUE AS VARIAVEIS GLOBAIS SAO NULAS ANTES DO QUICKSORT
+                comparacoesINT = 0;//GARANTINDO QUE AS VARIAVEIS GLOBAIS SAO NULAS ANTES DO QUICKSORT
+                
+                quicksortMedCinco(vetor, 0, N);
+
+                fim = clock();
+                //--------------------
+
+                /*
+                //IMPRIMINDO VETOR ORDENADO E SUAS ESTATISTICAS
+                cout<<endl<<endl;
+                cout<<"IMPRIMINDO VETOR ORDENADO POR MovieId DE FILMES"<<endl;
+                for(int i = 0; i < N; i++)
+                {
+                    cout<<"USER ID: "<<vetor[i].userid<<endl;
+                    cout<<"MOVIE ID: "<<vetor[i].movieid<<endl;
+                    cout<<"RATING: "<<vetor[i].rating<<endl;
+                    cout<<"TIMESTAMPS: "<<vetor[i].timestamp<<endl;
+                }
+                */
+                estatisticaComparacoesINT[j-1] = comparacoesINT;
+                estatisticaTrocasMOV[j-1] = trocasDeRegistroINT;
+                estatisticaTempoMOV[j-1] = ((float)(fim - inicio)/CLOCKS_PER_SEC)*1000;
+                cout<<endl<<endl<<"numero de comparacoes: " << comparacoesINT<<endl;
+                cout<<"numero de trocas de registro: " << trocasDeRegistroINT<< endl;
+                cout<<"tempo de execucao: "<< ((float)(fim - inicio)/CLOCKS_PER_SEC)*1000 <<
+                "ms"<<endl << endl;
+                //------------------------------------------
+                delete []vetor;//Deletando vetor de movies
+
+                arq.close();//FECHANDO O ARQUIVO DE DADOS
+            }
+            
+        }//Fim da 5 execução de cada N
+        cout << "--------------------------------------" << endl;
+        //Análise dos dados para cada N
+        float auxCompMov = 0;
+        float auxTrocaMov = 0;
+        float auxTempoMov = 0;
+        for(int i = 0; i < 5; i++){
+            auxCompMov+=estatisticaComparacoesINT[i];
+            auxTrocaMov+=estatisticaTrocasMOV[i];
+            auxTempoMov+=estatisticaTempoMOV[i];
+        }
+        auxCompMov = auxCompMov/5;
+        auxTrocaMov = auxTrocaMov/5;
+        auxTempoMov = (float) (auxTempoMov/5);
+        saida2 << endl << "Média do número de comparações: " << auxCompMov << endl;
+        saida2 << "Média do número de trocas: " << auxTrocaMov << endl;
+        saida2 << "Média do tempo de execução: " << auxTempoMov << "ms" << endl << endl;
+
+    }
+    
+    saida2 << "Resultado para o QuickInsertionSort M = 10 " << endl;
+    //Leitura do arquivo rating
+    
+    for(int i = 0; i< tam_entrada; i++){
+        
+        saida2 << endl << "Resultado da ordenação para N = " << entradas[i]  << endl << endl;
+        for(int j =1; j<=5; j++){//Executar 5 vezes para cada N
+            cout << endl << j << " execução para N = " << entradas[i];
+            srand(2*j*(i+1));//Sementes diferentes para cada execução de cada N
+
+            arq.open("ratings.csv");
+
+            if(arq.is_open())
+            {   
+                int N = entradas[i];
+                int *vetor = new int[N];
+                int m;
+                std::string s;
+                //ALGORITMO PARA LER E DESCARTAR A PRIMEIRA LINHA
+                getline(arq, s, ',');
+                getline(arq, s, ',');
+                getline(arq, s, ',');
+                getline(arq, s, '\n');
+                //--------------------------
+                
+                //LENDO O ARQUIVO----------------------
+                for(int i = 0; i < N; i++)
+                {   aleatorio = rand()%10;
+                    if(aleatorio==1){
+                        getline(arq, s, ',');
+                        m = atoi(s.c_str());
+
+                        getline(arq, s, ',');
+
+                        getline(arq, s, ',');
+                        
+                        getline(arq, s, '\n');
+                        
+                        vetor[i] = m;
+                    }else{
+                        i--;
+                    }
+                }
+                //------------------------------------
+                /*
+                //IMPRIMINDO O ARQUIVO DE FORMA DESORDENADA
+                cout<<endl<<endl;
+                cout<<"IMPRIMINDO VETOR DE FILMES"<<endl;
+                for(int i = 0; i < N; i++)
+                {
+                    cout<<"USER ID: "<<vetor[i].userid<<endl;
+                    cout<<"MOVIE ID: "<<vetor[i].movieid<<endl;
+                    cout<<"RATING: "<<vetor[i].rating<<endl;
+                    cout<<"TIMESTAMPS: "<<vetor[i].timestamp<<endl;
+                }
+                */
+                //------------------------------------
+
+                //APLICANDO O QUICKSORT
+                clock_t fim, inicio;
+                inicio = clock();
+                trocasDeRegistroINT = 0;//GARANTINDO QUE AS VARIAVEIS GLOBAIS SAO NULAS ANTES DO QUICKSORT
+                comparacoesINT = 0;//GARANTINDO QUE AS VARIAVEIS GLOBAIS SAO NULAS ANTES DO QUICKSORT
+                
+                QuickInsertionSort10(0, N, vetor);
+
+                fim = clock();
+                //--------------------
+
+                /*
+                //IMPRIMINDO VETOR ORDENADO E SUAS ESTATISTICAS
+                cout<<endl<<endl;
+                cout<<"IMPRIMINDO VETOR ORDENADO POR MovieId DE FILMES"<<endl;
+                for(int i = 0; i < N; i++)
+                {
+                    cout<<"USER ID: "<<vetor[i].userid<<endl;
+                    cout<<"MOVIE ID: "<<vetor[i].movieid<<endl;
+                    cout<<"RATING: "<<vetor[i].rating<<endl;
+                    cout<<"TIMESTAMPS: "<<vetor[i].timestamp<<endl;
+                }
+                */
+                estatisticaComparacoesINT[j-1] = comparacoesINT;
+                estatisticaTrocasMOV[j-1] = trocasDeRegistroINT;
+                estatisticaTempoMOV[j-1] = ((float)(fim - inicio)/CLOCKS_PER_SEC)*1000;
+                cout<<endl<<endl<<"numero de comparacoes: " << comparacoesINT<<endl;
+                cout<<"numero de trocas de registro: " << trocasDeRegistroINT<< endl;
+                cout<<"tempo de execucao: "<< ((float)(fim - inicio)/CLOCKS_PER_SEC)*1000 <<
+                "ms"<<endl << endl;
+                //------------------------------------------
+                delete []vetor;//Deletando vetor de movies
+
+                arq.close();//FECHANDO O ARQUIVO DE DADOS
+            }
+            
+        }//Fim da 5 execução de cada N
+        cout << "--------------------------------------" << endl;
+        //Análise dos dados para cada N
+        float auxCompMov = 0;
+        float auxTrocaMov = 0;
+        float auxTempoMov = 0;
+        for(int i = 0; i < 5; i++){
+            auxCompMov+=estatisticaComparacoesINT[i];
+            auxTrocaMov+=estatisticaTrocasMOV[i];
+            auxTempoMov+=estatisticaTempoMOV[i];
+        }
+        auxCompMov = auxCompMov/5;
+        auxTrocaMov = auxTrocaMov/5;
+        auxTempoMov = (float) (auxTempoMov/5);
+        saida2 << endl << "Média do número de comparações: " << auxCompMov << endl;
+        saida2 << "Média do número de trocas: " << auxTrocaMov << endl;
+        saida2 << "Média do tempo de execução: " << auxTempoMov << "ms" << endl << endl;
+
+    }
+    
+    saida2 << "Resultado para o QuickInsertionSort100" << endl;
+    //Leitura do arquivo rating
+    
+    for(int i = 0; i< tam_entrada; i++){
+        
+        saida2 << endl << "Resultado da ordenação para N = " << entradas[i]  << endl << endl;
+        for(int j =1; j<=5; j++){//Executar 5 vezes para cada N
+            cout << endl << j << " execução para N = " << entradas[i];
+            srand(2*j*(i+1));//Sementes diferentes para cada execução de cada N
+
+            arq.open("ratings.csv");
+
+            if(arq.is_open())
+            {   
+                int N = entradas[i];
+                int *vetor = new int[N];
+                int m;
+                std::string s;
+                //ALGORITMO PARA LER E DESCARTAR A PRIMEIRA LINHA
+                getline(arq, s, ',');
+                getline(arq, s, ',');
+                getline(arq, s, ',');
+                getline(arq, s, '\n');
+                //--------------------------
+                
+                //LENDO O ARQUIVO----------------------
+                for(int i = 0; i < N; i++)
+                {   aleatorio = rand()%10;
+                    if(aleatorio==1){
+                        getline(arq, s, ',');
+                        m = atoi(s.c_str());
+
+                        getline(arq, s, ',');
+
+                        getline(arq, s, ',');
+                        
+                        getline(arq, s, '\n');
+                        
+                        vetor[i] = m;
+                    }else{
+                        i--;
+                    }
+                }
+                //------------------------------------
+                /*
+                //IMPRIMINDO O ARQUIVO DE FORMA DESORDENADA
+                cout<<endl<<endl;
+                cout<<"IMPRIMINDO VETOR DE FILMES"<<endl;
+                for(int i = 0; i < N; i++)
+                {
+                    cout<<"USER ID: "<<vetor[i].userid<<endl;
+                    cout<<"MOVIE ID: "<<vetor[i].movieid<<endl;
+                    cout<<"RATING: "<<vetor[i].rating<<endl;
+                    cout<<"TIMESTAMPS: "<<vetor[i].timestamp<<endl;
+                }
+                */
+                //------------------------------------
+
+                //APLICANDO O QUICKSORT
+                clock_t fim, inicio;
+                inicio = clock();
+                trocasDeRegistroINT = 0;//GARANTINDO QUE AS VARIAVEIS GLOBAIS SAO NULAS ANTES DO QUICKSORT
+                comparacoesINT = 0;//GARANTINDO QUE AS VARIAVEIS GLOBAIS SAO NULAS ANTES DO QUICKSORT
+                
+                QuickInsertionSort100(0, N, vetor);
+
+                fim = clock();
+                //--------------------
+
+                /*
+                //IMPRIMINDO VETOR ORDENADO E SUAS ESTATISTICAS
+                cout<<endl<<endl;
+                cout<<"IMPRIMINDO VETOR ORDENADO POR MovieId DE FILMES"<<endl;
+                for(int i = 0; i < N; i++)
+                {
+                    cout<<"USER ID: "<<vetor[i].userid<<endl;
+                    cout<<"MOVIE ID: "<<vetor[i].movieid<<endl;
+                    cout<<"RATING: "<<vetor[i].rating<<endl;
+                    cout<<"TIMESTAMPS: "<<vetor[i].timestamp<<endl;
+                }
+                */
+                estatisticaComparacoesINT[j-1] = comparacoesINT;
+                estatisticaTrocasMOV[j-1] = trocasDeRegistroINT;
+                estatisticaTempoMOV[j-1] = ((float)(fim - inicio)/CLOCKS_PER_SEC)*1000;
+                cout<<endl<<endl<<"numero de comparacoes: " << comparacoesINT<<endl;
+                cout<<"numero de trocas de registro: " << trocasDeRegistroINT<< endl;
+                cout<<"tempo de execucao: "<< ((float)(fim - inicio)/CLOCKS_PER_SEC)*1000 <<
+                "ms"<<endl << endl;
+                //------------------------------------------
+                delete []vetor;//Deletando vetor de movies
+
+                arq.close();//FECHANDO O ARQUIVO DE DADOS
+            }
+            
+        }//Fim da 5 execução de cada N
+        cout << "--------------------------------------" << endl;
+        //Análise dos dados para cada N
+        float auxCompMov = 0;
+        float auxTrocaMov = 0;
+        float auxTempoMov = 0;
+        for(int i = 0; i < 5; i++){
+            auxCompMov+=estatisticaComparacoesINT[i];
+            auxTrocaMov+=estatisticaTrocasMOV[i];
+            auxTempoMov+=estatisticaTempoMOV[i];
+        }
+        auxCompMov = auxCompMov/5.0;
+        auxTrocaMov = auxTrocaMov/5.0;
+        auxTempoMov = (float) (auxTempoMov/5);
+        saida2 << endl << "Média do número de comparações: " << auxCompMov << endl;
+        saida2 << "Média do número de trocas: " << auxTrocaMov << endl;
+        saida2 << "Média do tempo de execução: " << auxTempoMov << "ms" << endl << endl;
+
+    }
+    
+
     saida2.close();//Fechando arquivo de saida
+//*******************FIM DO CENÁRIO 2 *****************
+
+//*********************CENÁRIO 3 MAIN*******************
+
+    fstream saida3;
+    saida3.open("cenario3.txt");
+    //trocar pelo sort escolhido
+    saida3 << "Resultado para o QuickSort " << endl;
+    cout << "Cenario 3:" << endl << endl;
+    cout << "Resultado para o QuickSort " << endl;
+    //Leitura do arquivo rating
+    
+    for(int i = 0; i< tam_entrada; i++){
+        
+        saida3 << endl << "Resultado da ordenação para N = " << entradas[i]  << endl << endl;
+        for(int j =1; j<=5; j++){//Executar 5 vezes para cada N
+            cout << endl << j << " execução para N = " << entradas[i];
+            srand(2*j*(i+1));//Sementes diferentes para cada execução de cada N
+
+            arq.open("ratings.csv");
+
+            if(arq.is_open())
+            {   
+                int N = entradas[i];
+                int *vetor = new int[N];
+                int m;
+                std::string s;
+                //ALGORITMO PARA LER E DESCARTAR A PRIMEIRA LINHA
+                getline(arq, s, ',');
+                getline(arq, s, ',');
+                getline(arq, s, ',');
+                getline(arq, s, '\n');
+                //--------------------------
+                
+                //LENDO O ARQUIVO----------------------
+                for(int i = 0; i < N; i++)
+                {   aleatorio = rand()%10;
+                    if(aleatorio==1){
+                        getline(arq, s, ',');
+                        m = atoi(s.c_str());
+
+                        getline(arq, s, ',');
+
+                        getline(arq, s, ',');
+                        
+                        getline(arq, s, '\n');
+                        
+                        vetor[i] = m;
+                    }else{
+                        i--;
+                    }
+                }
+
+                //APLICANDO O QUICKSORT
+                clock_t fim, inicio;
+                inicio = clock();
+                trocasDeRegistroINT = 0;//GARANTINDO QUE AS VARIAVEIS GLOBAIS SAO NULAS ANTES DO QUICKSORT
+                comparacoesINT = 0;//GARANTINDO QUE AS VARIAVEIS GLOBAIS SAO NULAS ANTES DO QUICKSORT
+                
+                quicksort(0, N, vetor);
+
+                fim = clock();
+                //--------------------
+
+                
+                estatisticaComparacoesINT[j-1] = comparacoesINT;
+                estatisticaTrocasINT[j-1] = trocasDeRegistroINT;
+                estatisticaTempoINT[j-1] = ((float)(fim - inicio)/CLOCKS_PER_SEC)*1000;
+                cout<<endl<<endl<<"numero de comparacoes: " << comparacoesINT<<endl;
+                cout<<"numero de trocas de registro: " << trocasDeRegistroINT<< endl;
+                cout<<"tempo de execucao: "<< ((float)(fim - inicio)/CLOCKS_PER_SEC)*1000 <<
+                "ms"<<endl << endl;
+                //------------------------------------------
+                delete []vetor;//Deletando vetor de movies
+
+                arq.close();//FECHANDO O ARQUIVO DE DADOS
+            }
+            
+        }//Fim da 5 execução de cada N
+        cout << "--------------------------------------" << endl;
+        //Análise dos dados para cada N
+        float auxCompMov = 0;
+        float auxTrocaMov = 0;
+        float auxTempoMov = 0;
+        for(int i = 0; i < 5; i++){
+            auxCompMov += estatisticaComparacoesINT[i];
+            auxTrocaMov += estatisticaTrocasMOV[i];
+            auxTempoMov += estatisticaTempoMOV[i];
+        }
+        auxCompMov = auxCompMov/5;
+        auxTrocaMov = auxTrocaMov/5;
+        auxTempoMov = (float) (auxTempoMov/5);
+        saida3 << endl << "Média do número de comparações: " << auxCompMov << endl;
+        saida3 << "Média do número de trocas: " << auxTrocaMov << endl;
+        saida3 << "Média do tempo de execução: " << auxTempoMov << "ms" << endl << endl;
+
+    }
+    
+    saida3 << "Resultado para o MergeSort" << endl;
+    cout << "Resultado para o MergeSort" << endl;
+    //Leitura do arquivo rating
+    
+    for(int i = 0; i< tam_entrada; i++){
+        
+        saida3 << endl << "Resultado da ordenação para N = " << entradas[i]  << endl << endl;
+        for(int j =1; j<=5; j++){//Executar 5 vezes para cada N
+            cout << endl << j << " execução para N = " << entradas[i];
+            srand(2*j*(i+1));//Sementes diferentes para cada execução de cada N
+
+            arq.open("ratings.csv");
+
+            if(arq.is_open())
+            {   
+                int N = entradas[i];
+                int *vetor = new int[N];
+                int m;
+                std::string s;
+                //ALGORITMO PARA LER E DESCARTAR A PRIMEIRA LINHA
+                getline(arq, s, ',');
+                getline(arq, s, ',');
+                getline(arq, s, ',');
+                getline(arq, s, '\n');
+                //--------------------------
+                
+                //LENDO O ARQUIVO----------------------
+                for(int i = 0; i < N; i++)
+                {   aleatorio = rand()%10;
+                    if(aleatorio==1){
+                        getline(arq, s, ',');
+                        m = atoi(s.c_str());
+
+                        getline(arq, s, ',');
+
+                        getline(arq, s, ',');
+                        
+                        getline(arq, s, '\n');
+                        
+                        vetor[i] = m;
+                    }else{
+                        i--;
+                    }
+                }
+
+                //APLICANDO O QUICKSORT
+                clock_t fim, inicio;
+                inicio = clock();
+                trocasDeRegistroINT = 0;//GARANTINDO QUE AS VARIAVEIS GLOBAIS SAO NULAS ANTES DO QUICKSORT
+                comparacoesINT = 0;//GARANTINDO QUE AS VARIAVEIS GLOBAIS SAO NULAS ANTES DO QUICKSORT
+                
+                merge(vetor, 0, N);
+
+                fim = clock();
+                //--------------------
+
+                
+                estatisticaComparacoesINT[j-1] = comparacoesINT;
+                estatisticaTrocasINT[j-1] = trocasDeRegistroINT;
+                estatisticaTempoINT[j-1] = ((float)(fim - inicio)/CLOCKS_PER_SEC)*1000;
+                cout<<endl<<endl<<"numero de comparacoes: " << comparacoesINT<<endl;
+                cout<<"numero de trocas de registro: " << trocasDeRegistroINT<< endl;
+                cout<<"tempo de execucao: "<< ((float)(fim - inicio)/CLOCKS_PER_SEC)*1000 <<
+                "ms"<<endl << endl;
+                //------------------------------------------
+                delete []vetor;//Deletando vetor de movies
+
+                arq.close();//FECHANDO O ARQUIVO DE DADOS
+            }
+            
+        }//Fim da 5 execução de cada N
+        cout << "--------------------------------------" << endl;
+        //Análise dos dados para cada N
+        float auxCompMov = 0;
+        float auxTrocaMov = 0;
+        float auxTempoMov = 0;
+        for(int i = 0; i < 5; i++){
+            auxCompMov += estatisticaComparacoesINT[i];
+            auxTrocaMov += estatisticaTrocasMOV[i];
+            auxTempoMov += estatisticaTempoMOV[i];
+        }
+        auxCompMov = auxCompMov/5;
+        auxTrocaMov = auxTrocaMov/5;
+        auxTempoMov = (float) (auxTempoMov/5);
+        saida3 << endl << "Média do número de comparações: " << auxCompMov << endl;
+        saida3 << "Média do número de trocas: " << auxTrocaMov << endl;
+        saida3 << "Média do tempo de execução: " << auxTempoMov << "ms" << endl << endl;
+
+    }
+
+    saida3 << "Resultado para o HeapSort" << endl;
+    cout << "Resultado para o HeapSort" << endl;
+    //Leitura do arquivo rating
+    
+    for(int i = 0; i< tam_entrada; i++){
+        
+        saida3 << endl << "Resultado da ordenação para N = " << entradas[i]  << endl << endl;
+        for(int j =1; j<=5; j++){//Executar 5 vezes para cada N
+            cout << endl << j << " execução para N = " << entradas[i];
+            srand(2*j*(i+1));//Sementes diferentes para cada execução de cada N
+
+            arq.open("ratings.csv");
+
+            if(arq.is_open())
+            {   
+                int N = entradas[i];
+                int *vetor = new int[N];
+                int m;
+                std::string s;
+                //ALGORITMO PARA LER E DESCARTAR A PRIMEIRA LINHA
+                getline(arq, s, ',');
+                getline(arq, s, ',');
+                getline(arq, s, ',');
+                getline(arq, s, '\n');
+                //--------------------------
+                
+                //LENDO O ARQUIVO----------------------
+                for(int i = 0; i < N; i++)
+                {   aleatorio = rand()%10;
+                    if(aleatorio==1){
+                        getline(arq, s, ',');
+                        m = atoi(s.c_str());
+
+                        getline(arq, s, ',');
+
+                        getline(arq, s, ',');
+                        
+                        getline(arq, s, '\n');
+                        
+                        vetor[i] = m;
+                    }else{
+                        i--;
+                    }
+                }
+
+                //APLICANDO O QUICKSORT
+                clock_t fim, inicio;
+                inicio = clock();
+                trocasDeRegistroINT = 0;//GARANTINDO QUE AS VARIAVEIS GLOBAIS SAO NULAS ANTES DO QUICKSORT
+                comparacoesINT = 0;//GARANTINDO QUE AS VARIAVEIS GLOBAIS SAO NULAS ANTES DO QUICKSORT
+                
+                Heapsort(vetor, N);
+
+                fim = clock();
+                //--------------------
+
+                
+                estatisticaComparacoesINT[j-1] = comparacoesINT;
+                estatisticaTrocasINT[j-1] = trocasDeRegistroINT;
+                estatisticaTempoINT[j-1] = ((float)(fim - inicio)/CLOCKS_PER_SEC)*1000;
+                cout<<endl<<endl<<"numero de comparacoes: " << comparacoesINT<<endl;
+                cout<<"numero de trocas de registro: " << trocasDeRegistroINT<< endl;
+                cout<<"tempo de execucao: "<< ((float)(fim - inicio)/CLOCKS_PER_SEC)*1000 <<
+                "ms"<<endl << endl;
+                //------------------------------------------
+                delete []vetor;//Deletando vetor de movies
+
+                arq.close();//FECHANDO O ARQUIVO DE DADOS
+            }
+            
+        }//Fim da 5 execução de cada N
+        cout << "--------------------------------------" << endl;
+        //Análise dos dados para cada N
+        float auxCompMov = 0;
+        float auxTrocaMov = 0;
+        float auxTempoMov = 0;
+        for(int i = 0; i < 5; i++){
+            auxCompMov += estatisticaComparacoesINT[i];
+            auxTrocaMov += estatisticaTrocasMOV[i];
+            auxTempoMov += estatisticaTempoMOV[i];
+        }
+        auxCompMov = auxCompMov/5;
+        auxTrocaMov = auxTrocaMov/5;
+        auxTempoMov = (float) (auxTempoMov/5);
+        saida3 << endl << "Média do número de comparações: " << auxCompMov << endl;
+        saida3 << "Média do número de trocas: " << auxTrocaMov << endl;
+        saida3 << "Média do tempo de execução: " << auxTempoMov << "ms" << endl << endl;
+
+    }
+
+    saida3 << "Resultado para o Insertion" << endl;
+    cout << "Resultado para o Insertion" << endl;
+    //Leitura do arquivo rating
+    
+    for(int i = 0; i< tam_entrada; i++){
+        
+        saida3 << endl << "Resultado da ordenação para N = " << entradas[i]  << endl << endl;
+        for(int j =1; j<=5; j++){//Executar 5 vezes para cada N
+            cout << endl << j << " execução para N = " << entradas[i];
+            srand(2*j*(i+1));//Sementes diferentes para cada execução de cada N
+
+            arq.open("ratings.csv");
+
+            if(arq.is_open())
+            {   
+                int N = entradas[i];
+                int *vetor = new int[N];
+                int m;
+                std::string s;
+                //ALGORITMO PARA LER E DESCARTAR A PRIMEIRA LINHA
+                getline(arq, s, ',');
+                getline(arq, s, ',');
+                getline(arq, s, ',');
+                getline(arq, s, '\n');
+                //--------------------------
+                
+                //LENDO O ARQUIVO----------------------
+                for(int i = 0; i < N; i++)
+                {   aleatorio = rand()%10;
+                    if(aleatorio==1){
+                        getline(arq, s, ',');
+                        m = atoi(s.c_str());
+
+                        getline(arq, s, ',');
+
+                        getline(arq, s, ',');
+                        
+                        getline(arq, s, '\n');
+                        
+                        vetor[i] = m;
+                    }else{
+                        i--;
+                    }
+                }
+
+                //APLICANDO O QUICKSORT
+                clock_t fim, inicio;
+                inicio = clock();
+                trocasDeRegistroINT = 0;//GARANTINDO QUE AS VARIAVEIS GLOBAIS SAO NULAS ANTES DO QUICKSORT
+                comparacoesINT = 0;//GARANTINDO QUE AS VARIAVEIS GLOBAIS SAO NULAS ANTES DO QUICKSORT
+                
+                InsertionSort(vetor, N);
+
+                fim = clock();
+                //--------------------
+
+                
+                estatisticaComparacoesINT[j-1] = comparacoesINT;
+                estatisticaTrocasINT[j-1] = trocasDeRegistroINT;
+                estatisticaTempoINT[j-1] = ((float)(fim - inicio)/CLOCKS_PER_SEC)*1000;
+                cout<<endl<<endl<<"numero de comparacoes: " << comparacoesINT<<endl;
+                cout<<"numero de trocas de registro: " << trocasDeRegistroINT<< endl;
+                cout<<"tempo de execucao: "<< ((float)(fim - inicio)/CLOCKS_PER_SEC)*1000 <<
+                "ms"<<endl << endl;
+                //------------------------------------------
+                delete []vetor;//Deletando vetor de movies
+
+                arq.close();//FECHANDO O ARQUIVO DE DADOS
+            }
+            
+        }//Fim da 5 execução de cada N
+        cout << "--------------------------------------" << endl;
+        //Análise dos dados para cada N
+        float auxCompMov = 0;
+        float auxTrocaMov = 0;
+        float auxTempoMov = 0;
+        for(int i = 0; i < 5; i++){
+            auxCompMov += estatisticaComparacoesINT[i];
+            auxTrocaMov += estatisticaTrocasMOV[i];
+            auxTempoMov += estatisticaTempoMOV[i];
+        }
+        auxCompMov = auxCompMov/5;
+        auxTrocaMov = auxTrocaMov/5;
+        auxTempoMov = (float) (auxTempoMov/5);
+        saida3 << endl << "Média do número de comparações: " << auxCompMov << endl;
+        saida3 << "Média do número de trocas: " << auxTrocaMov << endl;
+        saida3 << "Média do tempo de execução: " << auxTempoMov << "ms" << endl << endl;
+
+    }
+
+    saida3 << "Resultado para o GnomeSort" << endl;
+    cout << "Resultado para o GnomeSort" << endl;
+    //Leitura do arquivo rating
+    
+    for(int i = 0; i< tam_entrada; i++){
+        
+        saida3 << endl << "Resultado da ordenação para N = " << entradas[i]  << endl << endl;
+        for(int j =1; j<=5; j++){//Executar 5 vezes para cada N
+            cout << endl << j << " execução para N = " << entradas[i];
+            srand(2*j*(i+1));//Sementes diferentes para cada execução de cada N
+
+            arq.open("ratings.csv");
+
+            if(arq.is_open())
+            {   
+                int N = entradas[i];
+                int *vetor = new int[N];
+                int m;
+                std::string s;
+                //ALGORITMO PARA LER E DESCARTAR A PRIMEIRA LINHA
+                getline(arq, s, ',');
+                getline(arq, s, ',');
+                getline(arq, s, ',');
+                getline(arq, s, '\n');
+                //--------------------------
+                
+                //LENDO O ARQUIVO----------------------
+                for(int i = 0; i < N; i++)
+                {   aleatorio = rand()%10;
+                    if(aleatorio==1){
+                        getline(arq, s, ',');
+                        m = atoi(s.c_str());
+
+                        getline(arq, s, ',');
+
+                        getline(arq, s, ',');
+                        
+                        getline(arq, s, '\n');
+                        
+                        vetor[i] = m;
+                    }else{
+                        i--;
+                    }
+                }
+
+                //APLICANDO O QUICKSORT
+                clock_t fim, inicio;
+                inicio = clock();
+                trocasDeRegistroINT = 0;//GARANTINDO QUE AS VARIAVEIS GLOBAIS SAO NULAS ANTES DO QUICKSORT
+                comparacoesINT = 0;//GARANTINDO QUE AS VARIAVEIS GLOBAIS SAO NULAS ANTES DO QUICKSORT
+                
+                GnomeSortINT(vetor, N);
+
+                fim = clock();
+                //--------------------
+
+                
+                estatisticaComparacoesINT[j-1] = comparacoesINT;
+                estatisticaTrocasINT[j-1] = trocasDeRegistroINT;
+                estatisticaTempoINT[j-1] = ((float)(fim - inicio)/CLOCKS_PER_SEC)*1000;
+                cout<<endl<<endl<<"numero de comparacoes: " << comparacoesINT<<endl;
+                cout<<"numero de trocas de registro: " << trocasDeRegistroINT<< endl;
+                cout<<"tempo de execucao: "<< ((float)(fim - inicio)/CLOCKS_PER_SEC)*1000 <<
+                "ms"<<endl << endl;
+                //------------------------------------------
+                delete []vetor;//Deletando vetor de movies
+
+                arq.close();//FECHANDO O ARQUIVO DE DADOS
+            }
+            
+        }//Fim da 5 execução de cada N
+        cout << "--------------------------------------" << endl;
+        //Análise dos dados para cada N
+        float auxCompMov = 0;
+        float auxTrocaMov = 0;
+        float auxTempoMov = 0;
+        for(int i = 0; i < 5; i++){
+            auxCompMov += estatisticaComparacoesINT[i];
+            auxTrocaMov += estatisticaTrocasMOV[i];
+            auxTempoMov += estatisticaTempoMOV[i];
+        }
+        auxCompMov = auxCompMov/5;
+        auxTrocaMov = auxTrocaMov/5;
+        auxTempoMov = (float) (auxTempoMov/5);
+        saida3 << endl << "Média do número de comparações: " << auxCompMov << endl;
+        saida3 << "Média do número de trocas: " << auxTrocaMov << endl;
+        saida3 << "Média do tempo de execução: " << auxTempoMov << "ms" << endl << endl;
+
+    }
+    saida3.close();//Fechando arquivo de saida
+
 
 
 
