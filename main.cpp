@@ -15,10 +15,10 @@
 //#define N 100 //DEFINE O TAMANHO DO VETOR DE MOVIES A SER ORDENADO
 //--------------------Cenário 1 Funções ----------------------------
 
-long int trocasDeRegistroINT = 0; //CONTADOR DAS TROCAS DE REGISTRO DO VETOR DE INTEIROS
-long int comparacoesINT = 0; //CONTADOR DAS COMPARACOES DO VETOR DE INTEIROS
-long int trocasDeRegistroMOV = 0; //CONTADOR DAS TROCAS DE REGISTRO DO VETOR DE MOVIES
-long int comparacoesMOV = 0; //CONTADOR DAS TROCAS DE REGISTRO DO VETOR DE MOVIES
+unsigned long int trocasDeRegistroINT = 0; //CONTADOR DAS TROCAS DE REGISTRO DO VETOR DE INTEIROS
+unsigned long int comparacoesINT = 0; //CONTADOR DAS COMPARACOES DO VETOR DE INTEIROS
+unsigned long int trocasDeRegistroMOV = 0; //CONTADOR DAS TROCAS DE REGISTRO DO VETOR DE MOVIES
+unsigned long int comparacoesMOV = 0; //CONTADOR DAS TROCAS DE REGISTRO DO VETOR DE MOVIES
 
 using namespace std;
 
@@ -57,7 +57,6 @@ void quicksort (int start, int end, int *vet)
         return;
 
     int pivo = particao(start, end, vet);
-
     quicksort(start, pivo - 1, vet);
     quicksort(pivo + 1, end, vet);
 }
@@ -277,9 +276,8 @@ void InsertionSort(int vet[], int tam){
     int j;
     int pivo;
     for(int i = 1; i<tam-1; i++){
-        j= i-1;
         pivo = vet[i];
-        for(j; j <= 0; j--){
+        for(j = i-1; j >= 0; j--){
             comparacoesINT++;
             if(pivo<vet[j]){
                 vet[j+1]= vet[j];
@@ -329,8 +327,8 @@ void QuickInsertionSort100 (int start, int end, int *vet)
 //--------------------Cenário 3 Funções ----------------------------
 
 void intercalaMerge(int X[], int inicio, int fim, int meio){  
-    int posLivre,inicio_vetor1, inicio_vetor2, i;  
-    int aux[fim-inicio];  
+    int posLivre, inicio_vetor1, inicio_vetor2;  
+    int aux[fim-inicio+1]; //Certo?
     inicio_vetor1 = inicio;  
     inicio_vetor2 = meio+1;  
     posLivre = inicio;  
@@ -346,28 +344,39 @@ void intercalaMerge(int X[], int inicio, int fim, int meio){
         }  
         posLivre++;  
     }  
+    cout << "Certo comp" << endl;
+    
     //se ainda existem numeros no primeiro vetor  
     //que nao foram intercalados  
-    for (int i = inicio_vetor1; i <= meio; ++i)  
-    {  
-        aux[posLivre] = X[i];  
+    while (inicio_vetor1 <= meio)  
+    {   
+        aux[posLivre] = X[inicio_vetor1];  
         posLivre++;  
+        inicio_vetor1++;
     }  
+    
+    cout << "Certo 1 " << endl;
     //se ainda existem numeros no segundo vetor  
     //que nao foram intercalados  
-    for (int i = inicio_vetor2; i <= fim; ++i)  
+    while (inicio_vetor2 <= fim)  
     {  
-        aux[posLivre] = X[i];  
+        aux[posLivre] = X[inicio_vetor2];  
         posLivre++;  
+        inicio_vetor2++;
     }  
+    cout << "Certo 2" << endl;
+    
     //retorne os valores do vetor aux para o vetor X  
-    for (int i = inicio; i <=fim; ++i)  
+    for (int i = inicio; i <=fim; i++)  
     {  
         X[i] = aux[i];  
-    }  
+    }
+    
+    cout << "Certo retorno" << endl;
 }  
-void merge (int X[], int inicio, int fim){  
-    int meio;  
+void merge (int X[], int inicio, int fim){ 
+     
+    int meio; 
     if (inicio < fim)  
     {  
         meio = (inicio+fim)/2;  
@@ -657,13 +666,14 @@ int main()
     saida2 << "Resultado para o QuickSort recursivo" << endl;
     cout << "Resultado para o QuickSort recursivo" << endl;
     //Leitura do arquivo rating
-    
+    srand(time(0));
+    int tempoRandom = (rand()%2)+2;
     for(int i = 0; i< tam_entrada; i++){
         
         saida2 << endl << "Resultado da ordenação para N = " << entradas[i]  << endl << endl;
         for(int j =1; j<=5; j++){//Executar 5 vezes para cada N
             cout << endl << j << " execução para N = " << entradas[i];
-            srand(2*j*(i+1));//Sementes diferentes para cada execução de cada N
+            srand(tempoRandom*j*(i+1));//Sementes diferentes para cada execução de cada N
 
             arq.open("ratings.csv");
 
@@ -705,7 +715,7 @@ int main()
                 trocasDeRegistroINT = 0;//GARANTINDO QUE AS VARIAVEIS GLOBAIS SAO NULAS ANTES DO QUICKSORT
                 comparacoesINT = 0;//GARANTINDO QUE AS VARIAVEIS GLOBAIS SAO NULAS ANTES DO QUICKSORT
                 
-                quicksort(0, N, vetor);
+                quicksort(0, N-1, vetor);
 
                 fim = clock();
                 //--------------------
@@ -810,7 +820,7 @@ int main()
                 trocasDeRegistroINT = 0;//GARANTINDO QUE AS VARIAVEIS GLOBAIS SAO NULAS ANTES DO QUICKSORT
                 comparacoesINT = 0;//GARANTINDO QUE AS VARIAVEIS GLOBAIS SAO NULAS ANTES DO QUICKSORT
                 
-                quicksortMedTres(vetor, 0, N);
+                quicksortMedTres(vetor, 0, N-1);
 
                 fim = clock();
                 //--------------------
@@ -927,7 +937,7 @@ int main()
                 trocasDeRegistroINT = 0;//GARANTINDO QUE AS VARIAVEIS GLOBAIS SAO NULAS ANTES DO QUICKSORT
                 comparacoesINT = 0;//GARANTINDO QUE AS VARIAVEIS GLOBAIS SAO NULAS ANTES DO QUICKSORT
                 
-                quicksortMedCinco(vetor, 0, N);
+                quicksortMedCinco(vetor, 0, N-1);
 
                 fim = clock();
                 //--------------------
@@ -1313,7 +1323,7 @@ int main()
         
         saida3 << endl << "Resultado da ordenação para N = " << entradas[i]  << endl << endl;
         for(int j =1; j<=5; j++){//Executar 5 vezes para cada N
-            cout << endl << j << " execução para N = " << entradas[i];
+            cout << endl << j << " execução para N = " << entradas[i] << endl;
             srand(2*j*(i+1));//Sementes diferentes para cada execução de cada N
 
             arq.open("ratings.csv");
@@ -1356,7 +1366,7 @@ int main()
                 trocasDeRegistroINT = 0;//GARANTINDO QUE AS VARIAVEIS GLOBAIS SAO NULAS ANTES DO QUICKSORT
                 comparacoesINT = 0;//GARANTINDO QUE AS VARIAVEIS GLOBAIS SAO NULAS ANTES DO QUICKSORT
                 
-                merge(vetor, 0, N);
+                merge(vetor, 0, N-1);
 
                 fim = clock();
                 //--------------------
@@ -1665,6 +1675,8 @@ int main()
 
     }
     saida3.close();//Fechando arquivo de saida
+
+//**************MAIN CENÁRIO 4******************
 
 
 
