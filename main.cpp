@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <unistd.h>
+#include "class.h"
 
 //ANALISAR QUAL BIBLIOTECA A GENTE PODE REMOVER, PQ SAO MUITAS
 
@@ -34,21 +35,22 @@ void trocaDePosicao (int i, int j, int *vet)
 }
 
 int particao(int start, int end, int *vet)
-{
-    int i = start;
-    for (int j = start; j < end; j++)
+{   
+    int pivo = vet[end];
+    int i = start-1;
+    for (int j = start; j < end-1; j++)
     {
 
-        if (vet[j] <= vet[end])
-        {
-            trocaDePosicao(i++, j, vet);
+        if (vet[j] <= pivo)
+        {   i++;
+            trocaDePosicao(i, j, vet);
         }
         comparacoesINT++;
     }
 
-    trocaDePosicao(i, end, vet);
-
-    return i;
+    trocaDePosicao(i+1, end, vet);
+    
+    return i + 1;
 }
 
 void quicksort (int start, int end, int *vet)
@@ -467,7 +469,7 @@ int main()
     srand(time(NULL));
     for(int i = 0; i<NINT; i++)
     {
-        v[i] = rand()%1000;
+        v[i] = rand()%200;
     }
     int y = 0;
 
@@ -561,7 +563,7 @@ int main()
                 N = entradas[i];
                 //LENDO O ARQUIVO----------------------
                 for(int i = 0; i < N; i++)
-                {   aleatorio = rand()%10;
+                {   aleatorio = rand()%2;
                     if(aleatorio==1){
                         getline(arq, s, ',');
                         m.userid = atoi(s.c_str());
@@ -692,7 +694,7 @@ int main()
                 
                 //LENDO O ARQUIVO----------------------
                 for(int i = 0; i < N; i++)
-                {   aleatorio = rand()%10;
+                {   aleatorio = rand()%2;
                     if(aleatorio==1){
                         getline(arq, s, ',');
                         m = atoi(s.c_str());
@@ -714,9 +716,19 @@ int main()
                 inicio = clock();
                 trocasDeRegistroINT = 0;//GARANTINDO QUE AS VARIAVEIS GLOBAIS SAO NULAS ANTES DO QUICKSORT
                 comparacoesINT = 0;//GARANTINDO QUE AS VARIAVEIS GLOBAIS SAO NULAS ANTES DO QUICKSORT
-                
+                cout << "arq lido" << endl;
                 quicksort(0, N-1, vetor);
-
+                int a = 0;
+                while(a < N-1 && vetor[a]<=vetor[a+1]){
+                    
+                    a++;
+                }
+                if(a == N-1){
+                    cout << "ordenado"<< endl;
+                }
+                else{
+                    cout << "valor a" << a << endl;
+                }
                 fim = clock();
                 //--------------------
 
@@ -783,7 +795,7 @@ int main()
                 
                 //LENDO O ARQUIVO----------------------
                 for(int i = 0; i < N; i++)
-                {   aleatorio = rand()%10;
+                {   aleatorio = rand()%2;
                     if(aleatorio==1){
                         getline(arq, s, ',');
                         m = atoi(s.c_str());
@@ -900,7 +912,7 @@ int main()
                 
                 //LENDO O ARQUIVO----------------------
                 for(int i = 0; i < N; i++)
-                {   aleatorio = rand()%10;
+                {   aleatorio = rand()%2;
                     if(aleatorio==1){
                         getline(arq, s, ',');
                         m = atoi(s.c_str());
@@ -1014,7 +1026,7 @@ int main()
                 
                 //LENDO O ARQUIVO----------------------
                 for(int i = 0; i < N; i++)
-                {   aleatorio = rand()%10;
+                {   aleatorio = rand()%2;
                     if(aleatorio==1){
                         getline(arq, s, ',');
                         m = atoi(s.c_str());
@@ -1128,7 +1140,7 @@ int main()
                 
                 //LENDO O ARQUIVO----------------------
                 for(int i = 0; i < N; i++)
-                {   aleatorio = rand()%10;
+                {   aleatorio = rand()%2;
                     if(aleatorio==1){
                         getline(arq, s, ',');
                         m = atoi(s.c_str());
@@ -1253,7 +1265,7 @@ int main()
                 
                 //LENDO O ARQUIVO----------------------
                 for(int i = 0; i < N; i++)
-                {   aleatorio = rand()%10;
+                {   aleatorio = rand()%2;
                     if(aleatorio==1){
                         getline(arq, s, ',');
                         m = atoi(s.c_str());
@@ -1276,7 +1288,7 @@ int main()
                 trocasDeRegistroINT = 0;//GARANTINDO QUE AS VARIAVEIS GLOBAIS SAO NULAS ANTES DO QUICKSORT
                 comparacoesINT = 0;//GARANTINDO QUE AS VARIAVEIS GLOBAIS SAO NULAS ANTES DO QUICKSORT
                 
-                quicksort(0, N, vetor);
+                quicksortMedTres(vetor, 0, N);
 
                 fim = clock();
                 //--------------------
@@ -1343,7 +1355,7 @@ int main()
                 
                 //LENDO O ARQUIVO----------------------
                 for(int i = 0; i < N; i++)
-                {   aleatorio = rand()%10;
+                {   aleatorio = rand()%2;
                     if(aleatorio==1){
                         getline(arq, s, ',');
                         m = atoi(s.c_str());
@@ -1433,7 +1445,7 @@ int main()
                 
                 //LENDO O ARQUIVO----------------------
                 for(int i = 0; i < N; i++)
-                {   aleatorio = rand()%10;
+                {   aleatorio = rand()%2;
                     if(aleatorio==1){
                         getline(arq, s, ',');
                         m = atoi(s.c_str());
@@ -1523,7 +1535,7 @@ int main()
                 
                 //LENDO O ARQUIVO----------------------
                 for(int i = 0; i < N; i++)
-                {   aleatorio = rand()%10;
+                {   aleatorio = rand()%2;
                     if(aleatorio==1){
                         getline(arq, s, ',');
                         m = atoi(s.c_str());
@@ -1613,7 +1625,7 @@ int main()
                 
                 //LENDO O ARQUIVO----------------------
                 for(int i = 0; i < N; i++)
-                {   aleatorio = rand()%10;
+                {   aleatorio = rand()%2;
                     if(aleatorio==1){
                         getline(arq, s, ',');
                         m = atoi(s.c_str());
