@@ -27,7 +27,7 @@ using namespace std;
 //Porque ele já vem ordenado
 void embaralha(int *vet, int tam){
     srand(time(0));
-    int aleatorio = rand()%tam + tam/2;
+    int aleatorio = rand()%tam/2 + tam/2-1;
     int aux;
     int fim = (tam -1)/2;
     //Ate a metade do vetor troca os indices da 1 metade com os 2 metade de forma aleatoria
@@ -35,7 +35,7 @@ void embaralha(int *vet, int tam){
         aux = vet[i];
         vet[i] = vet[aleatorio];
         vet[aleatorio] = aux;
-        aleatorio = rand()%tam + tam/2;
+        aleatorio = rand()%tam/2 + tam/2-1;
     }
 }
 
@@ -48,7 +48,6 @@ void trocaDePosicao (int i, int j, int *vet)
     int k = vet[i];
     vet[i] = vet[j];
     vet[j] = k;
-    trocasDeRegistroINT++;
 }
 
 int particao(int start, int end, int *vet)
@@ -57,21 +56,24 @@ int particao(int start, int end, int *vet)
     int i = start-1;
     for (int j = start; j < end-1; j++)
     {
-
+        
+        comparacoesINT++;
         if (vet[j] <= pivo)
         {   i++;
             trocaDePosicao(i, j, vet);
+            trocasDeRegistroINT++;
         }
-        comparacoesINT++;
     }
 
     trocaDePosicao(i+1, end, vet);
+    trocasDeRegistroINT++;
     
     return i + 1;
 }
 
 void quicksort (int start, int end, int *vet)
-{
+{   
+    comparacoesINT++;
     if (start >= end)
         return;
 
@@ -88,7 +90,6 @@ void trocaDePosicaoMovies(int i, int j, movies *vet)
     int k = vet[i].movieid;
     vet[i].movieid = vet[j].movieid;
     vet[j].movieid = k;
-    trocasDeRegistroMOV++;
 
 }
 
@@ -97,15 +98,17 @@ int particaoMovies(int start, int end, movies *vet)
     int i = start;
     for (int j = start; j < end; j++)
     {
-
+        
+        comparacoesMOV++;
         if (vet[j].movieid <= vet[end].movieid)
         {
             trocaDePosicaoMovies(i++, j, vet);
+            trocasDeRegistroMOV++;
         }
-        comparacoesMOV++;
     }
 
     trocaDePosicaoMovies(i, end, vet);
+    trocasDeRegistroMOV++;
 
     return i;
 }
@@ -134,7 +137,6 @@ void trocaPosicao2(int A[], int i, int j){
     int temp = A[i];
     A[i] = A[j];
     A[j] = temp;
-    trocasDeRegistroINT++;
 }
 
 int particiona2(int A[], int inicio, int fim) {
@@ -204,10 +206,12 @@ int particiona2(int A[], int inicio, int fim) {
         if (A[j] <= pivo) {
             i = i + 1;
             trocaPosicao2(A, i, j);
+            trocasDeRegistroINT++;
         }
     }
     //Coloca o pivô na posição de ordenação
     trocaPosicao2(A, i + 1, fim);
+    trocasDeRegistroINT++;
     return i + 1; //Retorna a posição do pivô
 }
 void quicksortMedTres(int A[], int inicio, int fim) {
@@ -224,24 +228,35 @@ void quicksortMedTres(int A[], int inicio, int fim) {
 
 int particiona2Med5(int A[], int inicio, int fim) {
     int medianaIndice;//índice da mediana, que será o pivô
+    comparacoesINT++;
     if(fim - inicio >= 5){
         srand(time(0));
         int indiceAleatorio[5]; // Vetor de indices aleatórios
         //Garantindo que os números aleatórios são diferentes
         for(int i = 0; i <= 4; i++){
             indiceAleatorio[i] = rand()%(fim-inicio);
+            comparacoesINT++;
             while(i==1 && indiceAleatorio[i]==indiceAleatorio[i-1]){
+                comparacoesINT++;
                 indiceAleatorio[i] = rand()%(fim-inicio);
             }
+            
+            comparacoesINT++;
             while(i==2 && (indiceAleatorio[i]==indiceAleatorio[i-1] || indiceAleatorio[i]==indiceAleatorio[i-2])){
+                comparacoesINT++;
                 indiceAleatorio[i] = rand()%(fim-inicio);
             }
+
+            comparacoesINT++;
             while(i==3 && (indiceAleatorio[i]==indiceAleatorio[i-1] || indiceAleatorio[i]==indiceAleatorio[i-2]
             || indiceAleatorio[i]==indiceAleatorio[i-3])){
+                comparacoesINT++;
                 indiceAleatorio[i] = rand()%(fim-inicio);
             }
+            comparacoesINT++;
             while(i==4 && (indiceAleatorio[i]==indiceAleatorio[i-1] || indiceAleatorio[i]==indiceAleatorio[i-2]
             || indiceAleatorio[i]==indiceAleatorio[i-3] || indiceAleatorio[i]==indiceAleatorio[i-4])){
+                comparacoesINT++;
                 indiceAleatorio[i] = rand()%(fim-inicio);
             }
         }
@@ -274,10 +289,12 @@ int particiona2Med5(int A[], int inicio, int fim) {
         if (A[j] <= pivo) {
             i = i + 1;
             trocaPosicao2(A, i, j);
+            trocasDeRegistroINT++;
         }
     }
     //Coloca o pivô na posição de ordenação
     trocaPosicao2(A, i + 1, fim);
+    trocasDeRegistroINT++;
     return i + 1; //Retorna a posição do pivô
 }
 void quicksortMedCinco(int A[], int inicio, int fim) {
@@ -298,6 +315,8 @@ void InsertionSort(int vet[], int tam){
         pivo = vet[i];
         for(j = i-1; j >= 0; j--){
             comparacoesINT++;
+            trocasDeRegistroINT++;
+
             if(pivo<vet[j]){
                 vet[j+1]= vet[j];
             }
@@ -351,13 +370,16 @@ void intercalaMerge(int X[], int inicio, int fim, int meio){
     inicio_vetor1 = inicio;  
     inicio_vetor2 = meio+1;  
     posLivre = 0;  
+    comparacoesINT++;
     while(inicio_vetor1 <= meio && inicio_vetor2 <= fim){  
+        comparacoesINT++;
         if (X[inicio_vetor1] <= X[inicio_vetor2])  
-        {  
+        {   trocasDeRegistroINT++;
             aux[posLivre] = X[inicio_vetor1];  
             inicio_vetor1++;  
-        }  
+        }
         else{  
+            trocasDeRegistroINT++;
             aux[posLivre] = X[inicio_vetor2];  
             inicio_vetor2++;  
         }  
@@ -367,7 +389,7 @@ void intercalaMerge(int X[], int inicio, int fim, int meio){
     //se ainda existem numeros no primeiro vetor  
     //que nao foram intercalados  
     while (inicio_vetor1 <= meio)  
-    {   
+    {   trocasDeRegistroINT++;
         aux[posLivre] = X[inicio_vetor1];  
         posLivre++;  
         inicio_vetor1++;
@@ -376,7 +398,7 @@ void intercalaMerge(int X[], int inicio, int fim, int meio){
     //se ainda existem numeros no segundo vetor  
     //que nao foram intercalados  
     while (inicio_vetor2 <= fim)  
-    {  
+    {   trocasDeRegistroINT++;
         aux[posLivre] = X[inicio_vetor2];  
         posLivre++;  
         inicio_vetor2++;
@@ -384,7 +406,7 @@ void intercalaMerge(int X[], int inicio, int fim, int meio){
     
     //retorne os valores do vetor aux para o vetor X  
     for (int i = inicio; i <=fim; i++)  
-    {  
+    {   trocasDeRegistroINT++;
         X[i] = aux[i];  
     }
     
@@ -392,6 +414,7 @@ void intercalaMerge(int X[], int inicio, int fim, int meio){
 void merge (int X[], int inicio, int fim){ 
      
     int meio; 
+    comparacoesINT++;
     if (inicio < fim)  
     {  
         meio = (inicio+fim)/2;  
@@ -412,8 +435,11 @@ void GnomeSortINT(int vet[], int tam){
         if(vet[i] > vet[i + 1]) {
             previous = i;
             next = i + 1;
+            comparacoesINT++;
             while(vet[previous] > vet[next])  {
-                trocaDePosicao(previous, next, vet);trocasDeRegistroINT++;
+                trocaDePosicao(previous, next, vet);
+                trocasDeRegistroINT++;
+                
                 comparacoesINT++;
                 if(previous > 0)
                     previous--;
@@ -671,8 +697,8 @@ int main()
 
     //--------------------Cenário 2 Main ----------------------------
 
-    int estatisticaComparacoesINT[5] = {0,0,0,0,0};
-    int estatisticaTrocasINT[5] = {0,0,0,0,0};
+    long int estatisticaComparacoesINT[5] = {0,0,0,0,0};
+    long int estatisticaTrocasINT[5] = {0,0,0,0,0};
     float estatisticaTempoINT[5] = {0,0,0,0,0};
 
     fstream saida2;
@@ -723,7 +749,7 @@ int main()
                         i--;
                     }
                 }
-
+                embaralha(vetor, N);
                 //APLICANDO O QUICKSORT
                 clock_t fim, inicio;
                 trocasDeRegistroINT = 0;//GARANTINDO QUE AS VARIAVEIS GLOBAIS SAO NULAS ANTES DO QUICKSORT
@@ -773,17 +799,16 @@ int main()
     //Leitura do arquivo rating
     
     for(int i = 0; i< tam_entrada; i++){
-
-        saida2 << endl << "Resultado da ordenação para N = " << entradas[i]  << endl << endl;
+        int N = entradas[i];
+        saida2 << endl << "Resultado da ordenação para N = " << N << endl << endl;
         for(int j =1; j<=5; j++){//Executar 5 vezes para cada N
-            cout << endl << j << " execução para N = " << entradas[i];
+            cout << endl << j << " execução para N = " << N;
             srand(2*j*(i+1));//Sementes diferentes para cada execução de cada N
 
             arq.open("ratings.csv");
 
             if(arq.is_open())
             {   
-                int N = entradas[i];
                 int *vetor = new int[N];
                 int m;
                 std::string s;
@@ -826,7 +851,7 @@ int main()
                 }
                 */
                 //------------------------------------
-
+                embaralha(vetor, N);
                 //APLICANDO O QUICKSORT
                 clock_t fim, inicio;
                 inicio = clock();
@@ -943,7 +968,7 @@ int main()
                 }
                 */
                 //------------------------------------
-
+                embaralha(vetor, N);
                 //APLICANDO O QUICKSORT
                 clock_t fim, inicio;
                 inicio = clock();
@@ -1058,7 +1083,7 @@ int main()
                 }
                 */
                 //------------------------------------
-
+                embaralha(vetor, N);
                 //APLICANDO O QUICKSORT
                 clock_t fim, inicio;
                 inicio = clock();
@@ -1173,7 +1198,7 @@ int main()
                 }
                 */
                 //------------------------------------
-
+                embaralha(vetor, N);
                 //APLICANDO O QUICKSORT
                 clock_t fim, inicio;
                 inicio = clock();
@@ -1284,7 +1309,7 @@ int main()
                         i--;
                     }
                 }
-
+                embaralha(vetor, N);
                 //APLICANDO O QUICKSORT
                 clock_t fim, inicio;
                 inicio = clock();
@@ -1374,7 +1399,7 @@ int main()
                         i--;
                     }
                 }
-
+                embaralha(vetor, N);
                 //APLICANDO O QUICKSORT
                 clock_t fim, inicio;
                 inicio = clock();
@@ -1464,7 +1489,7 @@ int main()
                         i--;
                     }
                 }
-
+                embaralha(vetor, N);
                 //APLICANDO O QUICKSORT
                 clock_t fim, inicio;
                 inicio = clock();
@@ -1554,7 +1579,7 @@ int main()
                         i--;
                     }
                 }
-
+                embaralha(vetor, N);
                 //APLICANDO O QUICKSORT
                 clock_t fim, inicio;
                 inicio = clock();
@@ -1644,7 +1669,7 @@ int main()
                         i--;
                     }
                 }
-
+                embaralha(vetor, N);
                 //APLICANDO O QUICKSORT
                 clock_t fim, inicio;
                 inicio = clock();
@@ -1693,8 +1718,321 @@ int main()
 
 //**************MAIN CENÁRIO 4******************
 
+cout << "Cenário 4" << endl;
+
+fstream saida4;
+saida4.open("cenario4.txt");
+for(int i = 0; i< tam_entrada; i++){
+        
+    saida4 << endl << "Resultado do Encadeamento Coalescido para N = " 
+    << entradas[i] << endl << endl;
+    cout << endl << "Resultado do Encadeamento Coalescido para N = " 
+    << entradas[i] << endl << endl;
+    for(int j =1; j<=5; j++){//Executar 5 vezes para cada N
+        cout << endl << j << " execução para N = " << entradas[i];
+        srand(2*j*(i+1));//Sementes diferentes para cada execução de cada N
+
+        arq.open("ratings.csv");
+
+        if(arq.is_open())
+        {   
+            int N = entradas[i];
+            ECoalescido* tabela = new ECoalescido(N);
+            DuplaMovies auxDupla = DuplaMovies(); //armazena a dupla temporariamente
+            //para colocar na tabela
+            int AuxUserId;//armazena userid temporariamente para leitura
+            int AuxMovieId;//armazena movieid temporariamente para leitura
+            std::string s;
+            //ALGORITMO PARA LER E DESCARTAR A PRIMEIRA LINHA
+            getline(arq, s, ',');
+            getline(arq, s, ',');
+            getline(arq, s, ',');
+            getline(arq, s, '\n');
+            //--------------------------
+            
+            //LENDO O ARQUIVO E ADICIONANDO NO HASH
+            for(int i = 0; i < N; i++)
+            {   aleatorio = rand()%2;
+                if(aleatorio==1){
+                    getline(arq, s, ',');
+                    AuxUserId = atoi(s.c_str());
+
+                    getline(arq, s, ',');
+                    AuxMovieId = atoi(s.c_str());
+
+                    getline(arq, s, ',');
+                    
+                    getline(arq, s, '\n');
+                    
+                    auxDupla.setUser(AuxUserId);
+                    auxDupla.setMovies(AuxMovieId);
+                    tabela->inserir(auxDupla);//como saber se foi inserido ou nao?
+                }else{//se nao tiver nenhum retorno vai inserir -1 elementos
+                    i--;//coloca retorno no inserir boolean?
+                }
+            }
+            //--------------------
+
+            //------------------------------------------
+            delete []tabela;//Deletando vetor de movies
+
+            arq.close();//FECHANDO O ARQUIVO DE DADOS
+        }
+        
+    }//Fim da 5 execução de cada N
+    cout << "--------------------------------------" << endl;
+    //Análise dos dados para cada N
+}
+    
+    
+for(int i = 0; i< tam_entrada; i++){
+        
+    saida4 << endl << "Resultado do Encadeamento Separado para N = " 
+    << entradas[i] << endl << endl;
+    cout << endl << "Resultado do Encadeamento Separado para N = " 
+    << entradas[i] << endl << endl;
+    for(int j =1; j<=5; j++){//Executar 5 vezes para cada N
+        cout << endl << j << " execução para N = " << entradas[i];
+        srand(2*j*(i+1));//Sementes diferentes para cada execução de cada N
+
+        arq.open("ratings.csv");
+
+        if(arq.is_open())
+        {   
+            int N = entradas[i];
+            ECoalescido* tabela = new ECoalescido(N);
+            DuplaMovies auxDupla = DuplaMovies(); //armazena a dupla temporariamente
+            //para colocar na tabela
+            int AuxUserId;//armazena userid temporariamente para leitura
+            int AuxMovieId;//armazena movieid temporariamente para leitura
+            std::string s;
+            //ALGORITMO PARA LER E DESCARTAR A PRIMEIRA LINHA
+            getline(arq, s, ',');
+            getline(arq, s, ',');
+            getline(arq, s, ',');
+            getline(arq, s, '\n');
+            //--------------------------
+            
+            //LENDO O ARQUIVO E ADICIONANDO NO HASH
+            for(int i = 0; i < N; i++)
+            {   aleatorio = rand()%2;
+                if(aleatorio==1){
+                    getline(arq, s, ',');
+                    AuxUserId = atoi(s.c_str());
+
+                    getline(arq, s, ',');
+                    AuxMovieId = atoi(s.c_str());
+
+                    getline(arq, s, ',');
+                    
+                    getline(arq, s, '\n');
+                    
+                    auxDupla.setUser(AuxUserId);
+                    auxDupla.setMovies(AuxMovieId);
+                    tabela->inserir(auxDupla);//como saber se foi inserido ou nao?
+                }else{//se nao tiver nenhum retorno vai inserir -1 elementos
+                    i--;//coloca retorno no inserir boolean?
+                }
+            }
+            //--------------------
+
+            //------------------------------------------
+            delete []tabela;//Deletando vetor de movies
+
+            arq.close();//FECHANDO O ARQUIVO DE DADOS
+        }
+        
+    }//Fim da 5 execução de cada N
+    cout << "--------------------------------------" << endl;
+    //Análise dos dados para cada N
+}
+    
+    
+for(int i = 0; i< tam_entrada; i++){
+        
+    saida4 << endl << "Resultado do Sondagem linear para N = " 
+    << entradas[i] << endl << endl;
+    cout << endl << "Resultado do Sondagem Linear para N = " 
+    << entradas[i] << endl << endl;
+    for(int j =1; j<=5; j++){//Executar 5 vezes para cada N
+        cout << endl << j << " execução para N = " << entradas[i];
+        srand(2*j*(i+1));//Sementes diferentes para cada execução de cada N
+
+        arq.open("ratings.csv");
+
+        if(arq.is_open())
+        {   
+            int N = entradas[i];
+            ECoalescido* tabela = new ECoalescido(N);
+            DuplaMovies auxDupla = DuplaMovies(); //armazena a dupla temporariamente
+            //para colocar na tabela
+            int AuxUserId;//armazena userid temporariamente para leitura
+            int AuxMovieId;//armazena movieid temporariamente para leitura
+            std::string s;
+            //ALGORITMO PARA LER E DESCARTAR A PRIMEIRA LINHA
+            getline(arq, s, ',');
+            getline(arq, s, ',');
+            getline(arq, s, ',');
+            getline(arq, s, '\n');
+            //--------------------------
+            
+            //LENDO O ARQUIVO E ADICIONANDO NO HASH
+            for(int i = 0; i < N; i++)
+            {   aleatorio = rand()%2;
+                if(aleatorio==1){
+                    getline(arq, s, ',');
+                    AuxUserId = atoi(s.c_str());
+
+                    getline(arq, s, ',');
+                    AuxMovieId = atoi(s.c_str());
+
+                    getline(arq, s, ',');
+                    
+                    getline(arq, s, '\n');
+                    
+                    auxDupla.setUser(AuxUserId);
+                    auxDupla.setMovies(AuxMovieId);
+                    tabela->inserir(auxDupla);//como saber se foi inserido ou nao?
+                }else{//se nao tiver nenhum retorno vai inserir -1 elementos
+                    i--;//coloca retorno no inserir boolean?
+                }
+            }
+            //--------------------
+
+            //------------------------------------------
+            delete []tabela;//Deletando vetor de movies
+
+            arq.close();//FECHANDO O ARQUIVO DE DADOS
+        }
+        
+    }//Fim da 5 execução de cada N
+    cout << "--------------------------------------" << endl;
+    //Análise dos dados para cada N
+}
+    
+for(int i = 0; i< tam_entrada; i++){
+        
+    saida4 << endl << "Resultado do Sondagem quadrática para N = " 
+    << entradas[i] << endl << endl;
+    cout << endl << "Resultado do Sondagem quadrática para N = " 
+    << entradas[i] << endl << endl;
+    for(int j =1; j<=5; j++){//Executar 5 vezes para cada N
+        cout << endl << j << " execução para N = " << entradas[i];
+        srand(2*j*(i+1));//Sementes diferentes para cada execução de cada N
+
+        arq.open("ratings.csv");
+
+        if(arq.is_open())
+        {   
+            int N = entradas[i];
+            ECoalescido* tabela = new ECoalescido(N);
+            DuplaMovies auxDupla = DuplaMovies(); //armazena a dupla temporariamente
+            //para colocar na tabela
+            int AuxUserId;//armazena userid temporariamente para leitura
+            int AuxMovieId;//armazena movieid temporariamente para leitura
+            std::string s;
+            //ALGORITMO PARA LER E DESCARTAR A PRIMEIRA LINHA
+            getline(arq, s, ',');
+            getline(arq, s, ',');
+            getline(arq, s, ',');
+            getline(arq, s, '\n');
+            //--------------------------
+            
+            //LENDO O ARQUIVO E ADICIONANDO NO HASH
+            for(int i = 0; i < N; i++)
+            {   aleatorio = rand()%2;
+                if(aleatorio==1){
+                    getline(arq, s, ',');
+                    AuxUserId = atoi(s.c_str());
+
+                    getline(arq, s, ',');
+                    AuxMovieId = atoi(s.c_str());
+
+                    getline(arq, s, ',');
+                    
+                    getline(arq, s, '\n');
+                    
+                    auxDupla.setUser(AuxUserId);
+                    auxDupla.setMovies(AuxMovieId);
+                    tabela->inserir(auxDupla);//como saber se foi inserido ou nao?
+                }else{//se nao tiver nenhum retorno vai inserir -1 elementos
+                    i--;//coloca retorno no inserir boolean?
+                }
+            }
+            //--------------------
+
+            //------------------------------------------
+            delete []tabela;//Deletando vetor de movies
+
+            arq.close();//FECHANDO O ARQUIVO DE DADOS
+        }
+        
+    }//Fim da 5 execução de cada N
+    cout << "--------------------------------------" << endl;
+    //Análise dos dados para cada N
+}
 
 
+for(int i = 0; i< tam_entrada; i++){
+        
+    saida4 << endl << "Resultado do Duplo Hash para N = " 
+    << entradas[i] << endl << endl;
+    for(int j =1; j<=5; j++){//Executar 5 vezes para cada N
+        cout << endl << j << " execução para N = " << entradas[i];
+        srand(2*j*(i+1));//Sementes diferentes para cada execução de cada N
 
+        arq.open("ratings.csv");
+
+        if(arq.is_open())
+        {   
+            int N = entradas[i];
+            ECoalescido* tabela = new ECoalescido(N);
+            DuplaMovies auxDupla = DuplaMovies(); //armazena a dupla temporariamente
+            //para colocar na tabela
+            int AuxUserId;//armazena userid temporariamente para leitura
+            int AuxMovieId;//armazena movieid temporariamente para leitura
+            std::string s;
+            //ALGORITMO PARA LER E DESCARTAR A PRIMEIRA LINHA
+            getline(arq, s, ',');
+            getline(arq, s, ',');
+            getline(arq, s, ',');
+            getline(arq, s, '\n');
+            //--------------------------
+            
+            //LENDO O ARQUIVO E ADICIONANDO NO HASH
+            for(int i = 0; i < N; i++)
+            {   aleatorio = rand()%2;
+                if(aleatorio==1){
+                    getline(arq, s, ',');
+                    AuxUserId = atoi(s.c_str());
+
+                    getline(arq, s, ',');
+                    AuxMovieId = atoi(s.c_str());
+
+                    getline(arq, s, ',');
+                    
+                    getline(arq, s, '\n');
+                    
+                    auxDupla.setUser(AuxUserId);
+                    auxDupla.setMovies(AuxMovieId);
+                    tabela->inserir(auxDupla);//como saber se foi inserido ou nao?
+                }else{//se nao tiver nenhum retorno vai inserir -1 elementos
+                    i--;//coloca retorno no inserir boolean?
+                }
+            }
+            //--------------------
+
+            //------------------------------------------
+            delete []tabela;//Deletando vetor de movies
+
+            arq.close();//FECHANDO O ARQUIVO DE DADOS
+        }
+        
+    }//Fim da 5 execução de cada N
+    cout << "--------------------------------------" << endl;
+    //Análise dos dados para cada N
+}
+    
+    saida4.close();//Fechando arquivo de saida
     return 0;
 }
