@@ -23,6 +23,23 @@ unsigned long int comparacoesMOV = 0; //CONTADOR DAS TROCAS DE REGISTRO DO VETOR
 
 using namespace std;
 
+//Embaralha vetor de userId 
+//Porque ele já vem ordenado
+void embaralha(int *vet, int tam){
+    srand(time(0));
+    int aleatorio = rand()%tam + tam/2;
+    int aux;
+    int fim = (tam -1)/2;
+    //Ate a metade do vetor troca os indices da 1 metade com os 2 metade de forma aleatoria
+    for(int i = 0; i <= fim; i++){
+        aux = vet[i];
+        vet[i] = vet[aleatorio];
+        vet[aleatorio] = aux;
+        aleatorio = rand()%tam + tam/2;
+    }
+}
+
+
 //-------------------------------------------------------
 //QUICKSORT PRA UM VETOR DE INTEIROS
 
@@ -330,10 +347,10 @@ void QuickInsertionSort100 (int start, int end, int *vet)
 
 void intercalaMerge(int X[], int inicio, int fim, int meio){  
     int posLivre, inicio_vetor1, inicio_vetor2;  
-    int aux[fim-inicio+1]; //Certo?
+    int aux[fim+1]; 
     inicio_vetor1 = inicio;  
     inicio_vetor2 = meio+1;  
-    posLivre = inicio;  
+    posLivre = 0;  
     while(inicio_vetor1 <= meio && inicio_vetor2 <= fim){  
         if (X[inicio_vetor1] <= X[inicio_vetor2])  
         {  
@@ -345,8 +362,7 @@ void intercalaMerge(int X[], int inicio, int fim, int meio){
             inicio_vetor2++;  
         }  
         posLivre++;  
-    }  
-    cout << "Certo comp" << endl;
+    }
     
     //se ainda existem numeros no primeiro vetor  
     //que nao foram intercalados  
@@ -357,7 +373,6 @@ void intercalaMerge(int X[], int inicio, int fim, int meio){
         inicio_vetor1++;
     }  
     
-    cout << "Certo 1 " << endl;
     //se ainda existem numeros no segundo vetor  
     //que nao foram intercalados  
     while (inicio_vetor2 <= fim)  
@@ -365,8 +380,7 @@ void intercalaMerge(int X[], int inicio, int fim, int meio){
         aux[posLivre] = X[inicio_vetor2];  
         posLivre++;  
         inicio_vetor2++;
-    }  
-    cout << "Certo 2" << endl;
+    }
     
     //retorne os valores do vetor aux para o vetor X  
     for (int i = inicio; i <=fim; i++)  
@@ -374,7 +388,6 @@ void intercalaMerge(int X[], int inicio, int fim, int meio){
         X[i] = aux[i];  
     }
     
-    cout << "Certo retorno" << endl;
 }  
 void merge (int X[], int inicio, int fim){ 
      
@@ -400,7 +413,7 @@ void GnomeSortINT(int vet[], int tam){
             previous = i;
             next = i + 1;
             while(vet[previous] > vet[next])  {
-                trocaDePosicao(previous, next, vet);
+                trocaDePosicao(previous, next, vet);trocasDeRegistroINT++;
                 comparacoesINT++;
                 if(previous > 0)
                     previous--;
@@ -713,22 +726,10 @@ int main()
 
                 //APLICANDO O QUICKSORT
                 clock_t fim, inicio;
-                inicio = clock();
                 trocasDeRegistroINT = 0;//GARANTINDO QUE AS VARIAVEIS GLOBAIS SAO NULAS ANTES DO QUICKSORT
                 comparacoesINT = 0;//GARANTINDO QUE AS VARIAVEIS GLOBAIS SAO NULAS ANTES DO QUICKSORT
-                cout << "arq lido" << endl;
+                inicio = clock();
                 quicksort(0, N-1, vetor);
-                int a = 0;
-                while(a < N-1 && vetor[a]<=vetor[a+1]){
-                    
-                    a++;
-                }
-                if(a == N-1){
-                    cout << "ordenado"<< endl;
-                }
-                else{
-                    cout << "valor a" << a << endl;
-                }
                 fim = clock();
                 //--------------------
 
@@ -749,20 +750,20 @@ int main()
         }//Fim da 5 execução de cada N
         cout << "--------------------------------------" << endl;
         //Análise dos dados para cada N
-        float auxCompMov = 0;
-        float auxTrocaMov = 0;
-        float auxTempoMov = 0;
+        float auxCompINT = 0;
+        float auxTrocaINT = 0;
+        float auxTempoINT = 0;
         for(int i = 0; i < 5; i++){
-            auxCompMov += estatisticaComparacoesINT[i];
-            auxTrocaMov += estatisticaTrocasMOV[i];
-            auxTempoMov += estatisticaTempoMOV[i];
+            auxCompINT += estatisticaComparacoesINT[i];
+            auxTrocaINT += estatisticaTrocasINT[i];
+            auxTempoINT += estatisticaTempoINT[i];
         }
-        auxCompMov = auxCompMov/5;
-        auxTrocaMov = auxTrocaMov/5;
-        auxTempoMov = (float) (auxTempoMov/5);
-        saida2 << endl << "Média do número de comparações: " << auxCompMov << endl;
-        saida2 << "Média do número de trocas: " << auxTrocaMov << endl;
-        saida2 << "Média do tempo de execução: " << auxTempoMov << "ms" << endl << endl;
+        auxCompINT = auxCompINT/5;
+        auxTrocaINT = auxTrocaINT/5;
+        auxTempoINT = (float) (auxTempoINT/5);
+        saida2 << endl << "Média do número de comparações: " << auxCompINT << endl;
+        saida2 << "Média do número de trocas: " << auxTrocaINT << endl;
+        saida2 << "Média do tempo de execução: " << auxTempoINT << "ms" << endl << endl;
 
     }
     
@@ -850,8 +851,8 @@ int main()
                 }
                 */
                 estatisticaComparacoesINT[j-1] = comparacoesINT;
-                estatisticaTrocasMOV[j-1] = trocasDeRegistroINT;
-                estatisticaTempoMOV[j-1] = ((float)(fim - inicio)/CLOCKS_PER_SEC)*1000;
+                estatisticaTrocasINT[j-1] = trocasDeRegistroINT;
+                estatisticaTempoINT[j-1] = ((float)(fim - inicio)/CLOCKS_PER_SEC)*1000;
                 cout<<endl<<endl<<"numero de comparacoes: " << comparacoesINT<<endl;
                 cout<<"numero de trocas de registro: " << trocasDeRegistroINT<< endl;
                 cout<<"tempo de execucao: "<< ((float)(fim - inicio)/CLOCKS_PER_SEC)*1000 <<
@@ -861,26 +862,26 @@ int main()
 
                 arq.close();//FECHANDO O ARQUIVO DE DADOS
             }else{
-                 cout << "erro arquivo!" << endl;
+                cout << "erro arquivo!" << endl;
             }
             
         }//Fim da 5 execução de cada N
         cout << "--------------------------------------" << endl;
         //Análise dos dados para cada N
-        float auxCompMov = 0;
-        float auxTrocaMov = 0;
-        float auxTempoMov = 0;
+        float auxCompINT = 0;
+        float auxTrocaINT = 0;
+        float auxTempoINT = 0;
         for(int i = 0; i < 5; i++){
-            auxCompMov+=estatisticaComparacoesINT[i];
-            auxTrocaMov+=estatisticaTrocasMOV[i];
-            auxTempoMov+=estatisticaTempoMOV[i];
+            auxCompINT+=estatisticaComparacoesINT[i];
+            auxTrocaINT+=estatisticaTrocasINT[i];
+            auxTempoINT+=estatisticaTempoINT[i];
         }
-        auxCompMov = auxCompMov/5;
-        auxTrocaMov = auxTrocaMov/5;
-        auxTempoMov = (float) (auxTempoMov/5);
-        saida2 << endl << "Média do número de comparações: " << auxCompMov << endl;
-        saida2 << "Média do número de trocas: " << auxTrocaMov << endl;
-        saida2 << "Média do tempo de execução: " << auxTempoMov << "ms" << endl << endl;
+        auxCompINT = auxCompINT/5;
+        auxTrocaINT = auxTrocaINT/5;
+        auxTempoINT = (float) (auxTempoINT/5);
+        saida2 << endl << "Média do número de comparações: " << auxCompINT << endl;
+        saida2 << "Média do número de trocas: " << auxTrocaINT << endl;
+        saida2 << "Média do tempo de execução: " << auxTempoINT << "ms" << endl << endl;
 
     }
     
@@ -967,8 +968,8 @@ int main()
                 }
                 */
                 estatisticaComparacoesINT[j-1] = comparacoesINT;
-                estatisticaTrocasMOV[j-1] = trocasDeRegistroINT;
-                estatisticaTempoMOV[j-1] = ((float)(fim - inicio)/CLOCKS_PER_SEC)*1000;
+                estatisticaTrocasINT[j-1] = trocasDeRegistroINT;
+                estatisticaTempoINT[j-1] = ((float)(fim - inicio)/CLOCKS_PER_SEC)*1000;
                 cout<<endl<<endl<<"numero de comparacoes: " << comparacoesINT<<endl;
                 cout<<"numero de trocas de registro: " << trocasDeRegistroINT<< endl;
                 cout<<"tempo de execucao: "<< ((float)(fim - inicio)/CLOCKS_PER_SEC)*1000 <<
@@ -982,24 +983,25 @@ int main()
         }//Fim da 5 execução de cada N
         cout << "--------------------------------------" << endl;
         //Análise dos dados para cada N
-        float auxCompMov = 0;
-        float auxTrocaMov = 0;
-        float auxTempoMov = 0;
+        float auxCompINT = 0;
+        float auxTrocaINT = 0;
+        float auxTempoINT = 0;
         for(int i = 0; i < 5; i++){
-            auxCompMov+=estatisticaComparacoesINT[i];
-            auxTrocaMov+=estatisticaTrocasMOV[i];
-            auxTempoMov+=estatisticaTempoMOV[i];
+            auxCompINT+=estatisticaComparacoesINT[i];
+            auxTrocaINT+=estatisticaTrocasINT[i];
+            auxTempoINT+=estatisticaTempoINT[i];
         }
-        auxCompMov = auxCompMov/5;
-        auxTrocaMov = auxTrocaMov/5;
-        auxTempoMov = (float) (auxTempoMov/5);
-        saida2 << endl << "Média do número de comparações: " << auxCompMov << endl;
-        saida2 << "Média do número de trocas: " << auxTrocaMov << endl;
-        saida2 << "Média do tempo de execução: " << auxTempoMov << "ms" << endl << endl;
+        auxCompINT = auxCompINT/5;
+        auxTrocaINT = auxTrocaINT/5;
+        auxTempoINT = (float) (auxTempoINT/5);
+        saida2 << endl << "Média do número de comparações: " << auxCompINT << endl;
+        saida2 << "Média do número de trocas: " << auxTrocaINT << endl;
+        saida2 << "Média do tempo de execução: " << auxTempoINT << "ms" << endl << endl;
 
     }
     
     saida2 << "Resultado para o QuickInsertionSort M = 10 " << endl;
+    cout << "Resultado para o QuickInsertionSort M = 10 " << endl;
     //Leitura do arquivo rating
     
     for(int i = 0; i< tam_entrada; i++){
@@ -1081,8 +1083,8 @@ int main()
                 }
                 */
                 estatisticaComparacoesINT[j-1] = comparacoesINT;
-                estatisticaTrocasMOV[j-1] = trocasDeRegistroINT;
-                estatisticaTempoMOV[j-1] = ((float)(fim - inicio)/CLOCKS_PER_SEC)*1000;
+                estatisticaTrocasINT[j-1] = trocasDeRegistroINT;
+                estatisticaTempoINT[j-1] = ((float)(fim - inicio)/CLOCKS_PER_SEC)*1000;
                 cout<<endl<<endl<<"numero de comparacoes: " << comparacoesINT<<endl;
                 cout<<"numero de trocas de registro: " << trocasDeRegistroINT<< endl;
                 cout<<"tempo de execucao: "<< ((float)(fim - inicio)/CLOCKS_PER_SEC)*1000 <<
@@ -1096,24 +1098,25 @@ int main()
         }//Fim da 5 execução de cada N
         cout << "--------------------------------------" << endl;
         //Análise dos dados para cada N
-        float auxCompMov = 0;
-        float auxTrocaMov = 0;
-        float auxTempoMov = 0;
+        float auxCompINT = 0;
+        float auxTrocaINT = 0;
+        float auxTempoINT = 0;
         for(int i = 0; i < 5; i++){
-            auxCompMov+=estatisticaComparacoesINT[i];
-            auxTrocaMov+=estatisticaTrocasMOV[i];
-            auxTempoMov+=estatisticaTempoMOV[i];
+            auxCompINT+=estatisticaComparacoesINT[i];
+            auxTrocaINT+=estatisticaTrocasINT[i];
+            auxTempoINT+=estatisticaTempoINT[i];
         }
-        auxCompMov = auxCompMov/5;
-        auxTrocaMov = auxTrocaMov/5;
-        auxTempoMov = (float) (auxTempoMov/5);
-        saida2 << endl << "Média do número de comparações: " << auxCompMov << endl;
-        saida2 << "Média do número de trocas: " << auxTrocaMov << endl;
-        saida2 << "Média do tempo de execução: " << auxTempoMov << "ms" << endl << endl;
+        auxCompINT = auxCompINT/5;
+        auxTrocaINT = auxTrocaINT/5;
+        auxTempoINT = (float) (auxTempoINT/5);
+        saida2 << endl << "Média do número de comparações: " << auxCompINT << endl;
+        saida2 << "Média do número de trocas: " << auxTrocaINT << endl;
+        saida2 << "Média do tempo de execução: " << auxTempoINT << "ms" << endl << endl;
 
     }
     
     saida2 << "Resultado para o QuickInsertionSort100" << endl;
+    cout << "Resultado para o QuickInsertionSort M = 100 " << endl;
     //Leitura do arquivo rating
     
     for(int i = 0; i< tam_entrada; i++){
@@ -1195,8 +1198,8 @@ int main()
                 }
                 */
                 estatisticaComparacoesINT[j-1] = comparacoesINT;
-                estatisticaTrocasMOV[j-1] = trocasDeRegistroINT;
-                estatisticaTempoMOV[j-1] = ((float)(fim - inicio)/CLOCKS_PER_SEC)*1000;
+                estatisticaTrocasINT[j-1] = trocasDeRegistroINT;
+                estatisticaTempoINT[j-1] = ((float)(fim - inicio)/CLOCKS_PER_SEC)*1000;
                 cout<<endl<<endl<<"numero de comparacoes: " << comparacoesINT<<endl;
                 cout<<"numero de trocas de registro: " << trocasDeRegistroINT<< endl;
                 cout<<"tempo de execucao: "<< ((float)(fim - inicio)/CLOCKS_PER_SEC)*1000 <<
@@ -1210,20 +1213,20 @@ int main()
         }//Fim da 5 execução de cada N
         cout << "--------------------------------------" << endl;
         //Análise dos dados para cada N
-        float auxCompMov = 0;
-        float auxTrocaMov = 0;
-        float auxTempoMov = 0;
+        float auxCompINT = 0;
+        float auxTrocaINT = 0;
+        float auxTempoINT = 0;
         for(int i = 0; i < 5; i++){
-            auxCompMov+=estatisticaComparacoesINT[i];
-            auxTrocaMov+=estatisticaTrocasMOV[i];
-            auxTempoMov+=estatisticaTempoMOV[i];
+            auxCompINT+=estatisticaComparacoesINT[i];
+            auxTrocaINT+=estatisticaTrocasINT[i];
+            auxTempoINT+=estatisticaTempoINT[i];
         }
-        auxCompMov = auxCompMov/5.0;
-        auxTrocaMov = auxTrocaMov/5.0;
-        auxTempoMov = (float) (auxTempoMov/5);
-        saida2 << endl << "Média do número de comparações: " << auxCompMov << endl;
-        saida2 << "Média do número de trocas: " << auxTrocaMov << endl;
-        saida2 << "Média do tempo de execução: " << auxTempoMov << "ms" << endl << endl;
+        auxCompINT = auxCompINT/5.0;
+        auxTrocaINT = auxTrocaINT/5.0;
+        auxTempoINT = (float) (auxTempoINT/5);
+        saida2 << endl << "Média do número de comparações: " << auxCompINT << endl;
+        saida2 << "Média do número de trocas: " << auxTrocaINT << endl;
+        saida2 << "Média do tempo de execução: " << auxTempoINT << "ms" << endl << endl;
 
     }
     
@@ -1288,7 +1291,7 @@ int main()
                 trocasDeRegistroINT = 0;//GARANTINDO QUE AS VARIAVEIS GLOBAIS SAO NULAS ANTES DO QUICKSORT
                 comparacoesINT = 0;//GARANTINDO QUE AS VARIAVEIS GLOBAIS SAO NULAS ANTES DO QUICKSORT
                 
-                quicksortMedTres(vetor, 0, N);
+                quicksortMedTres(vetor, 0, N-1);
 
                 fim = clock();
                 //--------------------
@@ -1310,20 +1313,20 @@ int main()
         }//Fim da 5 execução de cada N
         cout << "--------------------------------------" << endl;
         //Análise dos dados para cada N
-        float auxCompMov = 0;
-        float auxTrocaMov = 0;
-        float auxTempoMov = 0;
+        float auxCompINT = 0;
+        float auxTrocaINT = 0;
+        float auxTempoINT = 0;
         for(int i = 0; i < 5; i++){
-            auxCompMov += estatisticaComparacoesINT[i];
-            auxTrocaMov += estatisticaTrocasMOV[i];
-            auxTempoMov += estatisticaTempoMOV[i];
+            auxCompINT += estatisticaComparacoesINT[i];
+            auxTrocaINT += estatisticaTrocasINT[i];
+            auxTempoINT += estatisticaTempoINT[i];
         }
-        auxCompMov = auxCompMov/5;
-        auxTrocaMov = auxTrocaMov/5;
-        auxTempoMov = (float) (auxTempoMov/5);
-        saida3 << endl << "Média do número de comparações: " << auxCompMov << endl;
-        saida3 << "Média do número de trocas: " << auxTrocaMov << endl;
-        saida3 << "Média do tempo de execução: " << auxTempoMov << "ms" << endl << endl;
+        auxCompINT = auxCompINT/5;
+        auxTrocaINT = auxTrocaINT/5;
+        auxTempoINT = (float) (auxTempoINT/5);
+        saida3 << endl << "Média do número de comparações: " << auxCompINT << endl;
+        saida3 << "Média do número de trocas: " << auxTrocaINT << endl;
+        saida3 << "Média do tempo de execução: " << auxTempoINT << "ms" << endl << endl;
 
     }
     
@@ -1400,20 +1403,20 @@ int main()
         }//Fim da 5 execução de cada N
         cout << "--------------------------------------" << endl;
         //Análise dos dados para cada N
-        float auxCompMov = 0;
-        float auxTrocaMov = 0;
-        float auxTempoMov = 0;
+        float auxCompINT = 0;
+        float auxTrocaINT = 0;
+        float auxTempoINT = 0;
         for(int i = 0; i < 5; i++){
-            auxCompMov += estatisticaComparacoesINT[i];
-            auxTrocaMov += estatisticaTrocasMOV[i];
-            auxTempoMov += estatisticaTempoMOV[i];
+            auxCompINT += estatisticaComparacoesINT[i];
+            auxTrocaINT += estatisticaTrocasINT[i];
+            auxTempoINT += estatisticaTempoINT[i];
         }
-        auxCompMov = auxCompMov/5;
-        auxTrocaMov = auxTrocaMov/5;
-        auxTempoMov = (float) (auxTempoMov/5);
-        saida3 << endl << "Média do número de comparações: " << auxCompMov << endl;
-        saida3 << "Média do número de trocas: " << auxTrocaMov << endl;
-        saida3 << "Média do tempo de execução: " << auxTempoMov << "ms" << endl << endl;
+        auxCompINT = auxCompINT/5;
+        auxTrocaINT = auxTrocaINT/5;
+        auxTempoINT = (float) (auxTempoINT/5);
+        saida3 << endl << "Média do número de comparações: " << auxCompINT << endl;
+        saida3 << "Média do número de trocas: " << auxTrocaINT << endl;
+        saida3 << "Média do tempo de execução: " << auxTempoINT << "ms" << endl << endl;
 
     }
 
@@ -1468,7 +1471,7 @@ int main()
                 trocasDeRegistroINT = 0;//GARANTINDO QUE AS VARIAVEIS GLOBAIS SAO NULAS ANTES DO QUICKSORT
                 comparacoesINT = 0;//GARANTINDO QUE AS VARIAVEIS GLOBAIS SAO NULAS ANTES DO QUICKSORT
                 
-                Heapsort(vetor, N);
+                Heapsort(vetor, N-1);
 
                 fim = clock();
                 //--------------------
@@ -1490,20 +1493,20 @@ int main()
         }//Fim da 5 execução de cada N
         cout << "--------------------------------------" << endl;
         //Análise dos dados para cada N
-        float auxCompMov = 0;
-        float auxTrocaMov = 0;
-        float auxTempoMov = 0;
+        float auxCompINT = 0;
+        float auxTrocaINT = 0;
+        float auxTempoINT = 0;
         for(int i = 0; i < 5; i++){
-            auxCompMov += estatisticaComparacoesINT[i];
-            auxTrocaMov += estatisticaTrocasMOV[i];
-            auxTempoMov += estatisticaTempoMOV[i];
+            auxCompINT += estatisticaComparacoesINT[i];
+            auxTrocaINT += estatisticaTrocasINT[i];
+            auxTempoINT += estatisticaTempoINT[i];
         }
-        auxCompMov = auxCompMov/5;
-        auxTrocaMov = auxTrocaMov/5;
-        auxTempoMov = (float) (auxTempoMov/5);
-        saida3 << endl << "Média do número de comparações: " << auxCompMov << endl;
-        saida3 << "Média do número de trocas: " << auxTrocaMov << endl;
-        saida3 << "Média do tempo de execução: " << auxTempoMov << "ms" << endl << endl;
+        auxCompINT = auxCompINT/5;
+        auxTrocaINT = auxTrocaINT/5;
+        auxTempoINT = (float) (auxTempoINT/5);
+        saida3 << endl << "Média do número de comparações: " << auxCompINT << endl;
+        saida3 << "Média do número de trocas: " << auxTrocaINT << endl;
+        saida3 << "Média do tempo de execução: " << auxTempoINT << "ms" << endl << endl;
 
     }
 
@@ -1580,20 +1583,20 @@ int main()
         }//Fim da 5 execução de cada N
         cout << "--------------------------------------" << endl;
         //Análise dos dados para cada N
-        float auxCompMov = 0;
-        float auxTrocaMov = 0;
-        float auxTempoMov = 0;
+        float auxCompINT = 0;
+        float auxTrocaINT = 0;
+        float auxTempoINT = 0;
         for(int i = 0; i < 5; i++){
-            auxCompMov += estatisticaComparacoesINT[i];
-            auxTrocaMov += estatisticaTrocasMOV[i];
-            auxTempoMov += estatisticaTempoMOV[i];
+            auxCompINT += estatisticaComparacoesINT[i];
+            auxTrocaINT += estatisticaTrocasINT[i];
+            auxTempoINT += estatisticaTempoINT[i];
         }
-        auxCompMov = auxCompMov/5;
-        auxTrocaMov = auxTrocaMov/5;
-        auxTempoMov = (float) (auxTempoMov/5);
-        saida3 << endl << "Média do número de comparações: " << auxCompMov << endl;
-        saida3 << "Média do número de trocas: " << auxTrocaMov << endl;
-        saida3 << "Média do tempo de execução: " << auxTempoMov << "ms" << endl << endl;
+        auxCompINT = auxCompINT/5;
+        auxTrocaINT = auxTrocaINT/5;
+        auxTempoINT = (float) (auxTempoINT/5);
+        saida3 << endl << "Média do número de comparações: " << auxCompINT << endl;
+        saida3 << "Média do número de trocas: " << auxTrocaINT << endl;
+        saida3 << "Média do tempo de execução: " << auxTempoINT << "ms" << endl << endl;
 
     }
 
@@ -1670,20 +1673,20 @@ int main()
         }//Fim da 5 execução de cada N
         cout << "--------------------------------------" << endl;
         //Análise dos dados para cada N
-        float auxCompMov = 0;
-        float auxTrocaMov = 0;
-        float auxTempoMov = 0;
+        float auxCompINT = 0;
+        float auxTrocaINT = 0;
+        float auxTempoINT = 0;
         for(int i = 0; i < 5; i++){
-            auxCompMov += estatisticaComparacoesINT[i];
-            auxTrocaMov += estatisticaTrocasMOV[i];
-            auxTempoMov += estatisticaTempoMOV[i];
+            auxCompINT += estatisticaComparacoesINT[i];
+            auxTrocaINT += estatisticaTrocasINT[i];
+            auxTempoINT += estatisticaTempoINT[i];
         }
-        auxCompMov = auxCompMov/5;
-        auxTrocaMov = auxTrocaMov/5;
-        auxTempoMov = (float) (auxTempoMov/5);
-        saida3 << endl << "Média do número de comparações: " << auxCompMov << endl;
-        saida3 << "Média do número de trocas: " << auxTrocaMov << endl;
-        saida3 << "Média do tempo de execução: " << auxTempoMov << "ms" << endl << endl;
+        auxCompINT = auxCompINT/5;
+        auxTrocaINT = auxTrocaINT/5;
+        auxTempoINT = (float) (auxTempoINT/5);
+        saida3 << endl << "Média do número de comparações: " << auxCompINT << endl;
+        saida3 << "Média do número de trocas: " << auxTrocaINT << endl;
+        saida3 << "Média do tempo de execução: " << auxTempoINT << "ms" << endl << endl;
 
     }
     saida3.close();//Fechando arquivo de saida
