@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <unistd.h>
-#include "class.h"
+#include "hashing.h"
 
 //ANALISAR QUAL BIBLIOTECA A GENTE PODE REMOVER, PQ SAO MUITAS
 
@@ -580,7 +580,7 @@ int main()
     for(int i = 0; i< tam_entrada; i++){
         
         saida1 << endl << "Resultado da ordenação para N = " << entradas[i]  << endl << endl;
-        for(int j =1; j<=1; j++){//Executar 5 vezes para cada N
+        for(int j =1; j<=5; j++){//Executar 5 vezes para cada N
             cout << endl << j << " execução para N = " << entradas[i];
             srand(2*j*i);//Sementes diferentes para cada execução de cada N
 
@@ -710,7 +710,7 @@ int main()
     for(int i = 0; i< tam_entrada; i++){
         
         saida2 << endl << "Resultado da ordenação para N = " << entradas[i]  << endl << endl;
-        for(int j =1; j<=1; j++){//Executar 5 vezes para cada N
+        for(int j =1; j<=5; j++){//Executar 5 vezes para cada N
             cout << endl << j << " execução para N = " << entradas[i];
             srand(2*j*(i+1));//Sementes diferentes para cada execução de cada N
 
@@ -799,7 +799,7 @@ int main()
     for(int i = 0; i< tam_entrada; i++){
         int N = entradas[i];
         saida2 << endl << "Resultado da ordenação para N = " << N << endl << endl;
-        for(int j =1; j<=1; j++){//Executar 5 vezes para cada N
+        for(int j =1; j<=5; j++){//Executar 5 vezes para cada N
             cout << endl << j << " execução para N = " << N;
             srand(2*j*(i+1));//Sementes diferentes para cada execução de cada N
 
@@ -915,7 +915,7 @@ int main()
     for(int i = 0; i< tam_entrada; i++){
         
         saida2 << endl << "Resultado da ordenação para N = " << entradas[i]  << endl << endl;
-        for(int j =1; j<=1; j++){//Executar 5 vezes para cada N
+        for(int j =1; j<=5; j++){//Executar 5 vezes para cada N
             cout << endl << j << " execução para N = " << entradas[i];
             srand(2*j*(i+1));//Sementes diferentes para cada execução de cada N
 
@@ -1030,7 +1030,7 @@ int main()
     for(int i = 0; i< tam_entrada; i++){
         
         saida2 << endl << "Resultado da ordenação para N = " << entradas[i]  << endl << endl;
-        for(int j =1; j<=1; j++){//Executar 5 vezes para cada N
+        for(int j =1; j<=5; j++){//Executar 5 vezes para cada N
             cout << endl << j << " execução para N = " << entradas[i];
             srand(2*j*(i+1));//Sementes diferentes para cada execução de cada N
 
@@ -1145,7 +1145,7 @@ int main()
     for(int i = 0; i< tam_entrada; i++){
         
         saida2 << endl << "Resultado da ordenação para N = " << entradas[i]  << endl << endl;
-        for(int j =1; j<=1; j++){//Executar 5 vezes para cada N
+        for(int j =1; j<=5; j++){//Executar 5 vezes para cada N
             cout << endl << j << " execução para N = " << entradas[i];
             srand(2*j*(i+1));//Sementes diferentes para cada execução de cada N
 
@@ -1264,13 +1264,13 @@ int main()
     //trocar pelo sort escolhido
     saida3 << "Resultado para o QuickSort " << endl;
     cout << "Cenario 3:" << endl << endl;
-    cout << "Resultado para o QuickSort mediana de 5 " << endl;
+    cout << "Resultado para o QuickSort Insertion " << endl;
     //Leitura do arquivo rating
     
     for(int i = 0; i< tam_entrada; i++){
         
         saida3 << endl << "Resultado da ordenação para N = " << entradas[i]  << endl << endl;
-        for(int j =1; j<=1; j++){//Executar 5 vezes para cada N
+        for(int j =1; j<=5; j++){//Executar 5 vezes para cada N
             cout << endl << j << " execução para N = " << entradas[i];
             srand(2*j*(i+1));//Sementes diferentes para cada execução de cada N
 
@@ -1314,8 +1314,7 @@ int main()
                 trocasDeRegistroINT = 0;//GARANTINDO QUE AS VARIAVEIS GLOBAIS SAO NULAS ANTES DO QUICKSORT
                 comparacoesINT = 0;//GARANTINDO QUE AS VARIAVEIS GLOBAIS SAO NULAS ANTES DO QUICKSORT
                 
-                quicksortMedCinco(vetor, 0, N-1);
-
+                QuickInsertionSort10(0, N, vetor);
                 fim = clock();
                 //--------------------
 
@@ -1360,7 +1359,7 @@ int main()
     for(int i = 0; i< tam_entrada; i++){
         
         saida3 << endl << "Resultado da ordenação para N = " << entradas[i]  << endl << endl;
-        for(int j =1; j<=1; j++){//Executar 5 vezes para cada N
+        for(int j =1; j<=5; j++){//Executar 5 vezes para cada N
             cout << endl << j << " execução para N = " << entradas[i] << endl;
             srand(2*j*(i+1));//Sementes diferentes para cada execução de cada N
 
@@ -1450,7 +1449,7 @@ int main()
     for(int i = 0; i< tam_entrada; i++){
         
         saida3 << endl << "Resultado da ordenação para N = " << entradas[i]  << endl << endl;
-        for(int j =1; j<=1; j++){//Executar 5 vezes para cada N
+        for(int j =1; j<=5; j++){//Executar 5 vezes para cada N
             cout << endl << j << " execução para N = " << entradas[i];
             srand(2*j*(i+1));//Sementes diferentes para cada execução de cada N
 
@@ -1540,7 +1539,7 @@ int main()
     for(int i = 0; i< tam_entrada; i++){
         
         saida3 << endl << "Resultado da ordenação para N = " << entradas[i]  << endl << endl;
-        for(int j =1; j<=1; j++){//Executar 5 vezes para cada N
+        for(int j =1; j<=5; j++){//Executar 5 vezes para cada N
             cout << endl << j << " execução para N = " << entradas[i];
             srand(2*j*(i+1));//Sementes diferentes para cada execução de cada N
 
@@ -1630,7 +1629,7 @@ int main()
     for(int i = 0; i< tam_entrada; i++){
         
         saida3 << endl << "Resultado da ordenação para N = " << entradas[i]  << endl << endl;
-        for(int j =1; j<=1; j++){//Executar 5 vezes para cada N
+        for(int j =1; j<=5; j++){//Executar 5 vezes para cada N
             cout << endl << j << " execução para N = " << entradas[i];
             srand(2*j*(i+1));//Sementes diferentes para cada execução de cada N
 
@@ -1729,8 +1728,8 @@ for(int i = 0; i< tam_entrada; i++){
     << entradas[i] << endl << endl;
     cout << endl << "Resultado do Encadeamento Coalescido para N = " 
     << entradas[i] << endl << endl;
-    for(int j =1; j<=1; j++){//Executar 5 vezes para cada N
-        cout << endl << j << " execução para N = " << entradas[i];
+    for(int j =1; j<=5; j++){//Executar 5 vezes para cada N
+        cout << endl << j << " execução para N = " << entradas[i] << endl;
         srand(2*j*(i+1));//Sementes diferentes para cada execução de cada N
 
         arq.open("ratings.csv");
@@ -1807,8 +1806,8 @@ for(int i = 0; i< tam_entrada; i++){
     << entradas[i] << endl << endl;
     cout << endl << "Resultado do Encadeamento Separado para N = " 
     << entradas[i] << endl << endl;
-    for(int j =1; j<=1; j++){//Executar 5 vezes para cada N
-        cout << endl << j << " execução para N = " << entradas[i];
+    for(int j =1; j<=5; j++){//Executar 5 vezes para cada N
+        cout << endl << j << " execução para N = " << entradas[i] << endl;
         srand(2*j*(i+1));//Sementes diferentes para cada execução de cada N
 
         arq.open("ratings.csv");
@@ -1853,7 +1852,7 @@ for(int i = 0; i< tam_entrada; i++){
             cout << "colisoes " << tabela->qtdColisoes()<< endl;
             cout << "memoria: " << tabela->getMemoriaGasta() << endl;
     
-            vetEspaco[j-1] = N;
+            vetEspaco[j-1] = tabela->getMemoriaGasta();
             vetColisoes[j-1] = tabela->qtdColisoes();
             //------------------------------------------
             delete tabela;//Deletando vetor de movies
@@ -1885,8 +1884,8 @@ for(int i = 0; i< tam_entrada; i++){
     << entradas[i] << endl << endl;
     cout << endl << "Resultado do Sondagem Linear para N = " 
     << entradas[i] << endl << endl;
-    for(int j =1; j<=1; j++){//Executar 5 vezes para cada N
-        cout << endl << j << " execução para N = " << entradas[i];
+    for(int j =1; j<=5; j++){//Executar 5 vezes para cada N
+        cout << endl << j << " execução para N = " << entradas[i] << endl;
         srand(2*j*(i+1));//Sementes diferentes para cada execução de cada N
 
         arq.open("ratings.csv");
@@ -1931,7 +1930,7 @@ for(int i = 0; i< tam_entrada; i++){
             cout << "colisoes " << tabela->qtdColisoes()<< endl;
             cout << "memoria: " << tabela->getPosOcupadas() << endl;
     
-            vetEspaco[j-1] = 3*tabela->getPosOcupadas();
+            vetEspaco[j-1] = tabela->getPosOcupadas();
             vetColisoes[j-1] = tabela->qtdColisoes();
             //------------------------------------------
             delete tabela;//Deletando vetor de movies
@@ -1962,8 +1961,8 @@ for(int i = 0; i< tam_entrada; i++){
     << entradas[i] << endl << endl;
     cout << endl << "Resultado do Sondagem quadrática para N = " 
     << entradas[i] << endl << endl;
-    for(int j =1; j<=1; j++){//Executar 5 vezes para cada N
-        cout << endl << j << " execução para N = " << entradas[i];
+    for(int j =1; j<=5; j++){//Executar 5 vezes para cada N
+        cout << endl << j << " execução para N = " << entradas[i] << endl;
         srand(2*j*(i+1));//Sementes diferentes para cada execução de cada N
 
         arq.open("ratings.csv");
@@ -2008,7 +2007,7 @@ for(int i = 0; i< tam_entrada; i++){
             cout << "colisoes " << tabela->qtdColisoes()<< endl;
             cout << "memoria: " << tabela->getPosOcupadas() << endl;
     
-            vetEspaco[j-1] = 3*tabela->getPosOcupadas();
+            vetEspaco[j-1] = tabela->getPosOcupadas();
             vetColisoes[j-1] = tabela->qtdColisoes();
             //------------------------------------------
             delete tabela;//Deletando vetor de movies
@@ -2040,8 +2039,8 @@ for(int i = 0; i< tam_entrada; i++){
     << entradas[i] << endl << endl;
     cout << endl << "Resultado do Re-hashing para N = "
     << entradas[i] << endl << endl;
-    for(int j =1; j<=1; j++){//Executar 5 vezes para cada N
-        cout << endl << j << " execução para N = " << entradas[i];
+    for(int j =1; j<=5; j++){//Executar 5 vezes para cada N
+        cout << endl << j << " execução para N = " << entradas[i] << endl;
         srand(2*j*(i+1));//Sementes diferentes para cada execução de cada N
 
         arq.open("ratings.csv");
@@ -2084,7 +2083,7 @@ for(int i = 0; i< tam_entrada; i++){
                 }
             }
             cout << "colisoes " << tabela->qtdColisoes()<< endl;
-            cout << "memoria: " << 3*tabela->getPosOcupadas() << endl;
+            cout << "memoria: " << tabela->getPosOcupadas() << endl;
     
             vetEspaco[j-1] = tabela->getPosOcupadas();
             vetColisoes[j-1] = tabela->qtdColisoes();
