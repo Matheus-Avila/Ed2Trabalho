@@ -580,7 +580,7 @@ int main()
     for(int i = 0; i< tam_entrada; i++){
         
         saida1 << endl << "Resultado da ordenação para N = " << entradas[i]  << endl << endl;
-        for(int j =1; j<=5; j++){//Executar 5 vezes para cada N
+        for(int j =1; j<=1; j++){//Executar 5 vezes para cada N
             cout << endl << j << " execução para N = " << entradas[i];
             srand(2*j*i);//Sementes diferentes para cada execução de cada N
 
@@ -707,14 +707,12 @@ int main()
     saida2 << "Resultado para o QuickSort recursivo" << endl;
     cout << "Resultado para o QuickSort recursivo" << endl;
     //Leitura do arquivo rating
-    srand(time(0));
-    int tempoRandom = (rand()%2)+2;
     for(int i = 0; i< tam_entrada; i++){
         
         saida2 << endl << "Resultado da ordenação para N = " << entradas[i]  << endl << endl;
-        for(int j =1; j<=5; j++){//Executar 5 vezes para cada N
+        for(int j =1; j<=1; j++){//Executar 5 vezes para cada N
             cout << endl << j << " execução para N = " << entradas[i];
-            srand(tempoRandom*j*(i+1));//Sementes diferentes para cada execução de cada N
+            srand(2*j*(i+1));//Sementes diferentes para cada execução de cada N
 
             arq.open("ratings.csv");
 
@@ -801,7 +799,7 @@ int main()
     for(int i = 0; i< tam_entrada; i++){
         int N = entradas[i];
         saida2 << endl << "Resultado da ordenação para N = " << N << endl << endl;
-        for(int j =1; j<=5; j++){//Executar 5 vezes para cada N
+        for(int j =1; j<=1; j++){//Executar 5 vezes para cada N
             cout << endl << j << " execução para N = " << N;
             srand(2*j*(i+1));//Sementes diferentes para cada execução de cada N
 
@@ -917,7 +915,7 @@ int main()
     for(int i = 0; i< tam_entrada; i++){
         
         saida2 << endl << "Resultado da ordenação para N = " << entradas[i]  << endl << endl;
-        for(int j =1; j<=5; j++){//Executar 5 vezes para cada N
+        for(int j =1; j<=1; j++){//Executar 5 vezes para cada N
             cout << endl << j << " execução para N = " << entradas[i];
             srand(2*j*(i+1));//Sementes diferentes para cada execução de cada N
 
@@ -1032,7 +1030,7 @@ int main()
     for(int i = 0; i< tam_entrada; i++){
         
         saida2 << endl << "Resultado da ordenação para N = " << entradas[i]  << endl << endl;
-        for(int j =1; j<=5; j++){//Executar 5 vezes para cada N
+        for(int j =1; j<=1; j++){//Executar 5 vezes para cada N
             cout << endl << j << " execução para N = " << entradas[i];
             srand(2*j*(i+1));//Sementes diferentes para cada execução de cada N
 
@@ -1147,7 +1145,7 @@ int main()
     for(int i = 0; i< tam_entrada; i++){
         
         saida2 << endl << "Resultado da ordenação para N = " << entradas[i]  << endl << endl;
-        for(int j =1; j<=5; j++){//Executar 5 vezes para cada N
+        for(int j =1; j<=1; j++){//Executar 5 vezes para cada N
             cout << endl << j << " execução para N = " << entradas[i];
             srand(2*j*(i+1));//Sementes diferentes para cada execução de cada N
 
@@ -1266,13 +1264,13 @@ int main()
     //trocar pelo sort escolhido
     saida3 << "Resultado para o QuickSort " << endl;
     cout << "Cenario 3:" << endl << endl;
-    cout << "Resultado para o QuickSort " << endl;
+    cout << "Resultado para o QuickSort mediana de 5 " << endl;
     //Leitura do arquivo rating
     
     for(int i = 0; i< tam_entrada; i++){
         
         saida3 << endl << "Resultado da ordenação para N = " << entradas[i]  << endl << endl;
-        for(int j =1; j<=5; j++){//Executar 5 vezes para cada N
+        for(int j =1; j<=1; j++){//Executar 5 vezes para cada N
             cout << endl << j << " execução para N = " << entradas[i];
             srand(2*j*(i+1));//Sementes diferentes para cada execução de cada N
 
@@ -1316,7 +1314,7 @@ int main()
                 trocasDeRegistroINT = 0;//GARANTINDO QUE AS VARIAVEIS GLOBAIS SAO NULAS ANTES DO QUICKSORT
                 comparacoesINT = 0;//GARANTINDO QUE AS VARIAVEIS GLOBAIS SAO NULAS ANTES DO QUICKSORT
                 
-                quicksortMedTres(vetor, 0, N-1);
+                quicksortMedCinco(vetor, 0, N-1);
 
                 fim = clock();
                 //--------------------
@@ -1362,7 +1360,7 @@ int main()
     for(int i = 0; i< tam_entrada; i++){
         
         saida3 << endl << "Resultado da ordenação para N = " << entradas[i]  << endl << endl;
-        for(int j =1; j<=5; j++){//Executar 5 vezes para cada N
+        for(int j =1; j<=1; j++){//Executar 5 vezes para cada N
             cout << endl << j << " execução para N = " << entradas[i] << endl;
             srand(2*j*(i+1));//Sementes diferentes para cada execução de cada N
 
@@ -1452,7 +1450,7 @@ int main()
     for(int i = 0; i< tam_entrada; i++){
         
         saida3 << endl << "Resultado da ordenação para N = " << entradas[i]  << endl << endl;
-        for(int j =1; j<=5; j++){//Executar 5 vezes para cada N
+        for(int j =1; j<=1; j++){//Executar 5 vezes para cada N
             cout << endl << j << " execução para N = " << entradas[i];
             srand(2*j*(i+1));//Sementes diferentes para cada execução de cada N
 
@@ -1542,7 +1540,7 @@ int main()
     for(int i = 0; i< tam_entrada; i++){
         
         saida3 << endl << "Resultado da ordenação para N = " << entradas[i]  << endl << endl;
-        for(int j =1; j<=5; j++){//Executar 5 vezes para cada N
+        for(int j =1; j<=1; j++){//Executar 5 vezes para cada N
             cout << endl << j << " execução para N = " << entradas[i];
             srand(2*j*(i+1));//Sementes diferentes para cada execução de cada N
 
@@ -1632,7 +1630,7 @@ int main()
     for(int i = 0; i< tam_entrada; i++){
         
         saida3 << endl << "Resultado da ordenação para N = " << entradas[i]  << endl << endl;
-        for(int j =1; j<=5; j++){//Executar 5 vezes para cada N
+        for(int j =1; j<=1; j++){//Executar 5 vezes para cada N
             cout << endl << j << " execução para N = " << entradas[i];
             srand(2*j*(i+1));//Sementes diferentes para cada execução de cada N
 
@@ -1720,6 +1718,9 @@ int main()
 
 cout << "Cenário 4" << endl;
 
+long int vetEspaco[5] = {0, 0, 0, 0, 0}; // espaco utilizado para cada N
+long int vetColisoes[5] = {0, 0, 0, 0, 0}; // numero de colisoes para cada N
+
 fstream saida4;
 saida4.open("cenario4.txt");
 for(int i = 0; i< tam_entrada; i++){
@@ -1728,7 +1729,7 @@ for(int i = 0; i< tam_entrada; i++){
     << entradas[i] << endl << endl;
     cout << endl << "Resultado do Encadeamento Coalescido para N = " 
     << entradas[i] << endl << endl;
-    for(int j =1; j<=5; j++){//Executar 5 vezes para cada N
+    for(int j =1; j<=1; j++){//Executar 5 vezes para cada N
         cout << endl << j << " execução para N = " << entradas[i];
         srand(2*j*(i+1));//Sementes diferentes para cada execução de cada N
 
@@ -1771,17 +1772,32 @@ for(int i = 0; i< tam_entrada; i++){
                     i--;//coloca retorno no inserir boolean?
                 }
             }
-            //--------------------
-
+            cout << "colisoes " << tabela->qtdColisoes()<< endl;
+            cout << "memoria: " << 3*N << endl; // Gasto constante (a tabela eh fixa)
+    
+            vetEspaco[j-1] = 3*N;
+            vetColisoes[j-1] = tabela->qtdColisoes();
             //------------------------------------------
-            delete []tabela;//Deletando vetor de movies
-
+            delete tabela;//Deletando vetor de movies
+            
             arq.close();//FECHANDO O ARQUIVO DE DADOS
         }
         
     }//Fim da 5 execução de cada N
     cout << "--------------------------------------" << endl;
     //Análise dos dados para cada N
+
+    float auxMediaEspaco = 0;
+    float auxMediaColisao = 0;
+    for(int i=0; i< 5; i++){
+        auxMediaEspaco += vetEspaco[i];
+        auxMediaColisao += vetColisoes[i];
+    }
+    auxMediaColisao = auxMediaColisao/5;
+    auxMediaEspaco = auxMediaEspaco/5;
+
+    saida4 << "Media de colisoes: " << auxMediaColisao << endl;
+    saida4 << "Meida de memoria gasta: " << auxMediaEspaco << endl;
 }
     
     
@@ -1791,7 +1807,7 @@ for(int i = 0; i< tam_entrada; i++){
     << entradas[i] << endl << endl;
     cout << endl << "Resultado do Encadeamento Separado para N = " 
     << entradas[i] << endl << endl;
-    for(int j =1; j<=5; j++){//Executar 5 vezes para cada N
+    for(int j =1; j<=1; j++){//Executar 5 vezes para cada N
         cout << endl << j << " execução para N = " << entradas[i];
         srand(2*j*(i+1));//Sementes diferentes para cada execução de cada N
 
@@ -1800,7 +1816,7 @@ for(int i = 0; i< tam_entrada; i++){
         if(arq.is_open())
         {   
             int N = entradas[i];
-            ECoalescido* tabela = new ECoalescido(N);
+            ESeparado* tabela = new ESeparado(N);
             DuplaMovies auxDupla = DuplaMovies(); //armazena a dupla temporariamente
             //para colocar na tabela
             int AuxUserId;//armazena userid temporariamente para leitura
@@ -1834,17 +1850,32 @@ for(int i = 0; i< tam_entrada; i++){
                     i--;//coloca retorno no inserir boolean?
                 }
             }
-            //--------------------
-
+            cout << "colisoes " << tabela->qtdColisoes()<< endl;
+            cout << "memoria: " << tabela->getMemoriaGasta() << endl;
+    
+            vetEspaco[j-1] = N;
+            vetColisoes[j-1] = tabela->qtdColisoes();
             //------------------------------------------
-            delete []tabela;//Deletando vetor de movies
-
+            delete tabela;//Deletando vetor de movies
+            
             arq.close();//FECHANDO O ARQUIVO DE DADOS
         }
         
     }//Fim da 5 execução de cada N
     cout << "--------------------------------------" << endl;
     //Análise dos dados para cada N
+
+    float auxMediaEspaco = 0;
+    float auxMediaColisao = 0;
+    for(int i=0; i< 5; i++){
+        auxMediaEspaco += vetEspaco[i];
+        auxMediaColisao += vetColisoes[i];
+    }
+    auxMediaColisao = auxMediaColisao/5;
+    auxMediaEspaco = auxMediaEspaco/5;
+
+    saida4 << "Media de colisoes: " << auxMediaColisao << endl;
+    saida4 << "Meida de memoria gasta: " << auxMediaEspaco << endl;
 }
     
     
@@ -1854,7 +1885,7 @@ for(int i = 0; i< tam_entrada; i++){
     << entradas[i] << endl << endl;
     cout << endl << "Resultado do Sondagem Linear para N = " 
     << entradas[i] << endl << endl;
-    for(int j =1; j<=5; j++){//Executar 5 vezes para cada N
+    for(int j =1; j<=1; j++){//Executar 5 vezes para cada N
         cout << endl << j << " execução para N = " << entradas[i];
         srand(2*j*(i+1));//Sementes diferentes para cada execução de cada N
 
@@ -1863,7 +1894,7 @@ for(int i = 0; i< tam_entrada; i++){
         if(arq.is_open())
         {   
             int N = entradas[i];
-            ECoalescido* tabela = new ECoalescido(N);
+            SLinear* tabela = new SLinear(N);
             DuplaMovies auxDupla = DuplaMovies(); //armazena a dupla temporariamente
             //para colocar na tabela
             int AuxUserId;//armazena userid temporariamente para leitura
@@ -1897,17 +1928,32 @@ for(int i = 0; i< tam_entrada; i++){
                     i--;//coloca retorno no inserir boolean?
                 }
             }
-            //--------------------
-
+            cout << "colisoes " << tabela->qtdColisoes()<< endl;
+            cout << "memoria: " << tabela->getPosOcupadas() << endl;
+    
+            vetEspaco[j-1] = 3*tabela->getPosOcupadas();
+            vetColisoes[j-1] = tabela->qtdColisoes();
             //------------------------------------------
-            delete []tabela;//Deletando vetor de movies
-
+            delete tabela;//Deletando vetor de movies
+            
             arq.close();//FECHANDO O ARQUIVO DE DADOS
         }
         
     }//Fim da 5 execução de cada N
     cout << "--------------------------------------" << endl;
     //Análise dos dados para cada N
+
+    float auxMediaEspaco = 0;
+    float auxMediaColisao = 0;
+    for(int i=0; i< 5; i++){
+        auxMediaEspaco += vetEspaco[i];
+        auxMediaColisao += vetColisoes[i];
+    }
+    auxMediaColisao = auxMediaColisao/5;
+    auxMediaEspaco = auxMediaEspaco/5;
+
+    saida4 << "Media de colisoes: " << auxMediaColisao << endl;
+    saida4 << "Meida de memoria gasta: " << auxMediaEspaco << endl;
 }
     
 for(int i = 0; i< tam_entrada; i++){
@@ -1916,7 +1962,7 @@ for(int i = 0; i< tam_entrada; i++){
     << entradas[i] << endl << endl;
     cout << endl << "Resultado do Sondagem quadrática para N = " 
     << entradas[i] << endl << endl;
-    for(int j =1; j<=5; j++){//Executar 5 vezes para cada N
+    for(int j =1; j<=1; j++){//Executar 5 vezes para cada N
         cout << endl << j << " execução para N = " << entradas[i];
         srand(2*j*(i+1));//Sementes diferentes para cada execução de cada N
 
@@ -1925,7 +1971,7 @@ for(int i = 0; i< tam_entrada; i++){
         if(arq.is_open())
         {   
             int N = entradas[i];
-            ECoalescido* tabela = new ECoalescido(N);
+            SQuadratica* tabela = new SQuadratica(N);
             DuplaMovies auxDupla = DuplaMovies(); //armazena a dupla temporariamente
             //para colocar na tabela
             int AuxUserId;//armazena userid temporariamente para leitura
@@ -1959,17 +2005,32 @@ for(int i = 0; i< tam_entrada; i++){
                     i--;//coloca retorno no inserir boolean?
                 }
             }
-            //--------------------
-
+            cout << "colisoes " << tabela->qtdColisoes()<< endl;
+            cout << "memoria: " << tabela->getPosOcupadas() << endl;
+    
+            vetEspaco[j-1] = 3*tabela->getPosOcupadas();
+            vetColisoes[j-1] = tabela->qtdColisoes();
             //------------------------------------------
-            delete []tabela;//Deletando vetor de movies
-
+            delete tabela;//Deletando vetor de movies
+            
             arq.close();//FECHANDO O ARQUIVO DE DADOS
         }
         
     }//Fim da 5 execução de cada N
     cout << "--------------------------------------" << endl;
     //Análise dos dados para cada N
+
+    float auxMediaEspaco = 0;
+    float auxMediaColisao = 0;
+    for(int i=0; i< 5; i++){
+        auxMediaEspaco += vetEspaco[i];
+        auxMediaColisao += vetColisoes[i];
+    }
+    auxMediaColisao = auxMediaColisao/5;
+    auxMediaEspaco = auxMediaEspaco/5;
+
+    saida4 << "Media de colisoes: " << auxMediaColisao << endl;
+    saida4 << "Meida de memoria gasta: " << auxMediaEspaco << endl;
 }
 
 
@@ -1977,7 +2038,9 @@ for(int i = 0; i< tam_entrada; i++){
         
     saida4 << endl << "Resultado do Duplo Hash para N = " 
     << entradas[i] << endl << endl;
-    for(int j =1; j<=5; j++){//Executar 5 vezes para cada N
+    cout << endl << "Resultado do Re-hashing para N = "
+    << entradas[i] << endl << endl;
+    for(int j =1; j<=1; j++){//Executar 5 vezes para cada N
         cout << endl << j << " execução para N = " << entradas[i];
         srand(2*j*(i+1));//Sementes diferentes para cada execução de cada N
 
@@ -1986,7 +2049,7 @@ for(int i = 0; i< tam_entrada; i++){
         if(arq.is_open())
         {   
             int N = entradas[i];
-            ECoalescido* tabela = new ECoalescido(N);
+            DHashing* tabela = new DHashing(N);
             DuplaMovies auxDupla = DuplaMovies(); //armazena a dupla temporariamente
             //para colocar na tabela
             int AuxUserId;//armazena userid temporariamente para leitura
@@ -2020,17 +2083,32 @@ for(int i = 0; i< tam_entrada; i++){
                     i--;//coloca retorno no inserir boolean?
                 }
             }
-            //--------------------
-
+            cout << "colisoes " << tabela->qtdColisoes()<< endl;
+            cout << "memoria: " << 3*tabela->getPosOcupadas() << endl;
+    
+            vetEspaco[j-1] = tabela->getPosOcupadas();
+            vetColisoes[j-1] = tabela->qtdColisoes();
             //------------------------------------------
-            delete []tabela;//Deletando vetor de movies
-
+            delete tabela;//Deletando vetor de movies
+            
             arq.close();//FECHANDO O ARQUIVO DE DADOS
         }
         
     }//Fim da 5 execução de cada N
     cout << "--------------------------------------" << endl;
     //Análise dos dados para cada N
+
+    float auxMediaEspaco = 0;
+    float auxMediaColisao = 0;
+    for(int i=0; i< 5; i++){
+        auxMediaEspaco += vetEspaco[i];
+        auxMediaColisao += vetColisoes[i];
+    }
+    auxMediaColisao = auxMediaColisao/5;
+    auxMediaEspaco = auxMediaEspaco/5;
+
+    saida4 << "Media de colisoes: " << auxMediaColisao << endl;
+    saida4 << "Meida de memoria gasta: " << auxMediaEspaco << endl;
 }
     
     saida4.close();//Fechando arquivo de saida
