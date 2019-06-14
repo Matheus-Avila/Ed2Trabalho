@@ -11,14 +11,21 @@ arvoreb::arvoreb(){
     //Construtor padrao
 }
 
-//Construtor
+//Construtor completo
 arvoreb::arvoreb(int ordem){
     this->ordem = ordem;
-    raiz = new pagina();
+    this->numeroComparacoes = 0;
+    this->numeroTrocas = 0;
+    raiz = new pagina(ordem, NULL);
 }
 
 arvoreb::~arvoreb(){
     //Destrutor
+}
+
+//Retorna a ordem da arvore
+int arvoreb::getOrdem(){
+    return ordem;
 }
 
 bool arvoreb::buscaChave(int chave){
@@ -40,10 +47,15 @@ bool arvoreb::buscaChave(int chave){
         if(count < posOcupadas && chave == busca->getChave(count)->getValor()){
             return true;
         }//A chave eh menor que o chaves->valor ou chegou ao fim da pagina
-        else{//procura no filho que está na posOcupadas
-            busca = busca->getFilha(posOcupadas); 
+        else{//procura no filho que está no count
+            busca = busca->getFilha(count); 
         }
 
     }
     return false; // Nao encontrou a chave procurada
+}
+
+//Insere uma chave na arvore
+void arvoreb::inserirChave(chave movie, int *comparacoes, int *trocas){
+    
 }
