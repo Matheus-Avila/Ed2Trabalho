@@ -6,7 +6,7 @@ chave::chave()
 }
 
 //Construtor completo
-chave::chave(int valor, float rating, long int timestamp){
+chave::chave(float valor, float rating, long int timestamp){
     this->valor = valor;
     this->rating = rating;
     this->timestamp = timestamp;
@@ -18,7 +18,7 @@ chave::~chave()
 }
 
 //Define o valor da chave
-void chave::setValor(int valor){
+void chave::setValor(float valor){
     this->valor = valor;
 }
 
@@ -33,7 +33,7 @@ void chave::setTime(long int Time){
 }
 
 //Retorna valor da chave
-int chave::getValor(){
+float chave::getValor(){
     return this->valor;
 }
 

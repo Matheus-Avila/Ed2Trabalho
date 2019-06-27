@@ -56,7 +56,7 @@ bool arvoreb::buscaChave(int chave){
 }
 
 //Insere uma chave na arvore
-void arvoreb::inserirChave(chave movie, int *comparacoes, int *trocas){
+void arvoreb::inserirChave(chave* movie, int *comparacoes, int *trocas){
     //remover pai, a verificacao da raiz eh desnecessaria
     pagina* busca = raiz;
     int posOcupadas;// Armazena a qtde de chaves armazenadas
@@ -68,7 +68,7 @@ void arvoreb::inserirChave(chave movie, int *comparacoes, int *trocas){
         posOcupadas = busca->getPosOcupadas();
         count = 0;// Reseta o contador para a proxima pagina
         //Percorre a pagina e verifica se a chave eh maior que o chaves->valor
-        while(count < posOcupadas && movie.getValor() > busca->getChave(count)->getValor()){
+        while(count < posOcupadas && movie->getValor() > busca->getChave(count)->getValor()){
             count ++;
             //Sai quando chegar ao fim ou se chegar em uma chave maior que a movie.Valor
         }

@@ -10,9 +10,9 @@ class pagina{
     int getPosOcupadas();//Retorna numero de chaves ocupadas
     int getOrdem();//Retorna a ordem da pagina
     bool paginaCheia();//Testa se existem chaves disponiveis na pagina(T: Cheia/ F: PosLivre)
-    void subirChave(chave chaveNova, pagina* filha);//Apos o split, sobe a chave 
+    void subirChave(chave* chaveNova, pagina* filha);//Apos o split, sobe a chave 
     // e o novo filho para o pai
-    void inserirNaFolha(chave chaveNova); //Antes de inserir na folha,
+    void inserirNaFolha(chave* chaveNova); //Antes de inserir na folha,
     // ordena as chaves da folha, e insere o valor
     void splitPagina();//Divide a pagina lotada     
     bool eRaiz();//Testa se a página é a raiz  

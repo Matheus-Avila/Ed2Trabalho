@@ -1,7 +1,7 @@
 
 #include <iostream>
 #include <fstream>
-#include "arvores/funcCalculaChave.cpp"
+#include "./tela.h"
 
 using namespace std;
 
@@ -24,7 +24,21 @@ void troca(int* a, int* b){
 
 int main()
 {   
-    int a= 0, b=5;
+    switch (2){
+    case 1:
+        float *a = new float;
+        *a = 10.5; 
+        break;
+    case 2:
+        int *a = new int; 
+        *a = 10;
+    default:
+        char *a = new char;
+        *a = 'c';
+        break;
+    }   
+    cout << *a;
+    /* int a= 0, b=5;
     troca(&a, &b);
     cout << a << " " << b;
 
@@ -53,6 +67,6 @@ int main()
 
     for(int i = 0; i < 10; i++){
         cout << *fim[i]  << endl;
-    }
+    }*/
     return 0;
 }

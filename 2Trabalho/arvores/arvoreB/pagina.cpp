@@ -43,13 +43,13 @@ bool pagina::paginaCheia(){
 }
 
 //Apos o split, sobe a chave e o novo filho para o pai
-void pagina::subirChave(chave chave, pagina* filha){//filha eh a filha a direita de chave
+void pagina::subirChave(chave* chave, pagina* filha){//filha eh a filha a direita de chave
     //percorre pai procurando o lugar que a chave nova vai ficar
     int i;
     for(i = this->getPosOcupadas()-1; i >= -1; i--){
         //i = -1 indica que i percorreu a pagina e nao achou uma chave menor que chaveNova,
         //logo, a chave nova deve ser inserida na posicao 0
-        if(i != -1 && chave.getValor() < this->getChave(i)->getValor()){
+        if(i != -1 && chave->getValor() < this->getChave(i)->getValor()){
             //se der segmantetion fault altere esse if!!!!!!!!!!!!!!
             this->chaves[i+1] = this->chaves[i];//Move a chave para frente
             this->paginasFilhas[i+2] = this->paginasFilhas[i+1];//Move a filha a direita de
@@ -57,7 +57,7 @@ void pagina::subirChave(chave chave, pagina* filha){//filha eh a filha a direita
 
         }
         else{
-            this->chaves[i+1] = chave;//Insere a chave na posicao
+            this->chaves[i+1] = *chave;//Insere a chave na posicao
             this->paginasFilhas[i+2] = filha;//Insere a filha na posicao a direita
             break;//Encontramos a posicao da chaveNova, portanto paramos a execucao
         }
@@ -65,17 +65,17 @@ void pagina::subirChave(chave chave, pagina* filha){//filha eh a filha a direita
 }
 
 //Antes de inserir um valor ordena as chaves da folha, e insere a chave
-void pagina::inserirNaFolha(chave chaveNova){
+void pagina::inserirNaFolha(chave* chaveNova){
     //Percorre a partir do final, buscando a posicao da chaveNova
     for(int i = posOcupadas-1; i >= -1; i--){
         //i = -1 indica que i percorreu a pagina e nao achou uma chave menor que chaveNova,
         //logo, a chave nova deve ser inserida na posicao 0
-        if(chaveNova.getValor() < this->getChave(i)->getValor() && i != -1){
+        if(chaveNova->getValor() < this->getChave(i)->getValor() && i != -1){
             
             this->chaves[i+1] = this->chaves[i];//Move a chave para frente
         }
         else{
-            this->chaves[i+1] = chaveNova;//Insere a chave na posicao
+            this->chaves[i+1] = *chaveNova;//Insere a chave na posicao
             break;//Encontramos a posicao da chaveNova, portanto paramos a execucao
         }
 
@@ -102,7 +102,7 @@ void pagina::splitPagina(){
         //passar ultimo ponteiro
         filhaNova->paginasFilhas[i-getOrdem()-1] = this->paginasFilhas[i];
         //Sobe a chave intermediaria para o pai e aualiza posOcupadas
-        this->getPai()->subirChave(chaves[getOrdem()], filhaNova);
+        this->getPai()->subirChave(&chaves[getOrdem()], filhaNova);
         this->getPai()->posOcupadas++;
         this->posOcupadas--;
 
@@ -133,7 +133,7 @@ void pagina::splitPagina(){
             
         }
         //Sobe a chave intermediaria para o pai e aualiza posOcupadas
-        this->getPai()->subirChave(chaves[getOrdem()], filhaNova);
+        this->getPai()->subirChave(&chaves[getOrdem()], filhaNova);
         this->getPai()->posOcupadas++;
         this->posOcupadas--;
     }
