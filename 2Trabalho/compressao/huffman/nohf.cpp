@@ -59,3 +59,7 @@ void nohf::setFilhoEsq(int i){
 void nohf::setPai(int i){
     this->pai = i;
 }
+
+int nohf::setFrequencia(int i){
+    this->frequencia = i;
+}

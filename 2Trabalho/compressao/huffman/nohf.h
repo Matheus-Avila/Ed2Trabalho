@@ -17,7 +17,7 @@ class nohf{
     int getFilhoDir();//Retorna o filho a direita
     void setPai(int i);//Define o pai
     int getPai();//Retorna o pai
-    
+    int setFrequencia(int i);//Define a frequencia
 
     private:
     
