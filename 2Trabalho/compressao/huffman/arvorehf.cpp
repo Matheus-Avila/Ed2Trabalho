@@ -40,7 +40,8 @@ void arvorehf::montarArvore(string texto){
         }
         
     } 
-    
+    //Fim do pre processamento
+    //Nesse ponto a tabela de frequencias esta montada
     //Monta a arvore de huffman na tabela de frequencias dos caracteres
     
     this->size = this->arvoreTabela.size();
@@ -143,4 +144,25 @@ vector<int> arvorehf::codifica(string texto){
 //Decodifica um texto binario
 string arvorehf::decodifica(string texto){
 
+    //Converte string em char[]
+    char text[texto.size()]; 
+    strcpy(text,texto.c_str());
+    string resultado = "";//Armazena a string final apos a decodificacao
+    //O ultimo elemento da arvore eh a raiz
+    int busca = this->arvoreTabela.size()-1;//Busca comeca da raiz
+    for(int i = 0; i < texto.size(); i++){
+        if(busca < this->size){//Se for uma folha
+            //Adiciona o caractere no resultado e volta para a raiz
+            resultado = resultado + this->arvoreTabela[busca].getCaractere();
+            busca = this->arvoreTabela.size()-1;
+        }else{
+            if(text[i] == 1){//Se ler '1', vai para o filho a direita
+                busca = this->arvoreTabela[busca].getFilhoDir();
+            }
+            else{//Se ler '0', vai para o filho a esquerda
+                busca = this->arvoreTabela[busca].getFilhoEsq();
+            }
+        }
+    }//Fim do processamento
+    return resultado;
 }

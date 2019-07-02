@@ -12,7 +12,7 @@ class arvorehf{
     string decodifica(string);
     
     private:
-    int size;
+    int size;// Numero de folhas na arvore de Huffman
     vector<nohf> arvoreTabela;//Tabela com as frequencias dos
     //caracteres que sera usado para montar a arvore de huffman
 };
